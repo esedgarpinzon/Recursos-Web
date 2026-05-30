@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UEC Academy - Final Version</title>
+<style>
+  body { font-family: 'Arial', sans-serif; background-color: #f0f4f8; display: flex; justify-content: center; align-items: center; margin: 0; padding: 10px; }
+  .game-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-align: center; max-width: 950px; width: 100%; }
+  h1 { color: #1a365d; margin-bottom: 5px; font-size: 24px; }
+  #speaker-btn { font-size: 18px; padding: 12px 24px; border-radius: 30px; border: none; background-color: #cbd5e0; color: #2d3748; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
+  .paintable { fill: #ffffff !important; stroke: #1a202c !important; stroke-width: 3.5px !important; stroke-linecap: round; stroke-linejoin: round; cursor: pointer; transition: fill 0.3s ease; }
+  .init-black { fill: #000000 !important; } 
+  .paintable:hover { stroke: #3182ce !important; stroke-width: 5px !important; }
+  .fixed-decor { stroke: #1a202c; stroke-width: 3.5px; stroke-linecap: round; }
+  .palette { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 25px; padding: 20px; background: #f7fafc; border-radius: 15px; border: 3px dashed #cbd5e0; }
+  .color-circle { width: 70px; height: 70px; border-radius: 50% !important; cursor: pointer; border: 5px solid #cbd5e0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
+  .color-circle.selected { border-color: #1a202c !important; transform: scale(1.2); }
+  .pink { background-color: #e91e63 !important; } .white { background-color: #ffffff !important; } .black { background-color: #000000 !important; } .red { background-color: #f44336 !important; } .orange { background-color: #ff9800 !important; } .purple { background-color: #9c27b0 !important; } .blue { background-color: #2196f3 !important; } .brown { background-color: #795548 !important; } .gray { background-color: #9e9e9e !important; } .green { background-color: #4caf50 !important; } .yellow { background-color: #ffeb3b !important; }
+</style>
+</head>
+<body>
+
+<div class="game-container">
+  <h1>UEC Academy - Final Task 🎨</h1>
+  <button id="speaker-btn">🔊 Click an object to listen!</button>
+
+  <svg id="landscape" viewBox="0 0 1000 500" width="100%" height="auto" style="border: 4px solid #1a202c; border-radius: 12px; background-color: white;">
+    <rect width="1000" height="400" fill="#2196f3" />
+    <polygon id="volcano-left" points="150,400 280,240 410,400" class="paintable" />
+    <polygon id="volcano-center" points="460,400 650,150 840,400" class="paintable" />
+    <polygon id="volcano-right" points="720,400 850,210 980,400" class="paintable" />
+    <circle id="sun" cx="870" cy="80" r="42" class="paintable" />
+    
+    <path id="cloud-left" d="M120,80 a 20,20 0 0,1 30,-10 a 25,25 0 0,1 45,0 a 20,20 0 0,1 15,30 l -90,0 a 20,20 0 0,1 0,-20 z" class="paintable init-black" />
+    <path id="cloud-center" d="M440,70 a 16,16 0 0,1 26,-12 a 22,22 0 0,1 38,0 a 16,16 0 0,1 16,22 l -80,0 a 16,16 0 0,1 0,-10 z" class="paintable init-black" />
+    <ellipse id="rabbit-body" cx="265" cy="400" rx="16" ry="11" class="paintable init-black" />
+    <circle id="rabbit-head" cx="282" cy="386" r="9" class="paintable init-black" />
+    <path id="rabbit-ear-1" d="M280,378 Q278,360 281,360 Q284,360 283,378 Z" class="paintable init-black" />
+    <path id="rabbit-ear-2" d="M285,378 Q284,360 287,360 Q290,360 288,378 Z" class="paintable init-black" />
+
+    <rect y="400" width="1000" height="100" fill="#4caf50" stroke="#1a202c" stroke-width="4" />
+    <path id="tree-trunk" d="M140,400 L145,310 Q135,280 120,270 L125,260 Q145,275 155,290 Q170,270 190,265 L195,275 Q175,280 165,310 L170,400 Z" class="paintable" />
+    <path id="tree-leaves" d="M120,250 C95,255 70,230 75,195 C60,170 85,135 120,145 C135,115 180,115 195,145 C220,140 245,170 235,200 C245,230 215,265 185,250 C170,265 135,265 120,250 Z" class="paintable" />
+    <circle id="fruit-1" cx="105" cy="185" r="9" class="paintable" /><circle id="fruit-2" cx="140" cy="165" r="9" class="paintable" /><circle id="fruit-3" cx="180" cy="175" r="9" class="paintable" /><circle id="fruit-4" cx="150" cy="215" r="9" class="paintable" /><circle id="fruit-5" cx="195" cy="210" r="9" class="paintable" />
+    <path id="pathway" d="M380,400 Q400,430 350,500 L530,500 Q480,430 470,400 Z" class="paintable" />
+    
+    <rect id="house-base" x="330" y="250" width="160" height="150" class="paintable" />
+    <polygon id="house-roof" points="300,250 410,130 520,250" class="paintable" />
+    <rect id="house-door" x="355" y="315" width="45" height="85" class="paintable" />
+    <rect id="house-window" x="430" y="275" width="45" height="45" class="paintable" />
+
+    <circle id="kid-head" cx="620" cy="310" r="18" class="paintable" />
+    <polygon id="kid-hat" points="600,295 620,265 640,295" class="paintable" />
+    <rect id="kid-body" x="602" y="328" width="36" height="52" rx="6" class="paintable" />
+    <line x1="602" y1="350" x2="570" y2="350" stroke="#1a202c" stroke-width="3.5" />
+    <circle id="kid-hand-left" cx="564" cy="350" r="7" class="paintable" />
+    <line x1="638" y1="350" x2="670" y2="350" stroke="#1a202c" stroke-width="3.5" />
+    <circle id="kid-hand-right" cx="676" cy="350" r="7" class="paintable" />
+    <rect id="kid-leg-left" x="605" y="380" width="11" height="25" class="paintable" /><rect id="kid-leg-right" x="624" y="380" width="11" height="25" class="paintable" />
+
+    <line x1="35" y1="400" x2="35" y2="355" class="fixed-decor" /><circle id="flower-pink-1" cx="35" cy="355" r="14" class="paintable" />
+    <line x1="75" y1="400" x2="75" y2="365" class="fixed-decor" /><circle id="flower-red-1" cx="75" cy="365" r="12" class="paintable" />
+    <line x1="110" y1="400" x2="110" y2="375" class="fixed-decor" /><circle id="flower-purple-1" cx="110" cy="375" r="11" class="paintable" />
+    <line x1="215" y1="400" x2="215" y2="360" class="fixed-decor" /><circle id="flower-orange-1" cx="215" cy="360" r="13" class="paintable" />
+    <line x1="310" y1="400" x2="310" y2="370" class="fixed-decor" /><circle id="flower-blue-1" cx="310" cy="370" r="12" class="paintable" />
+    <line x1="780" y1="400" x2="780" y2="355" class="fixed-decor" /><circle id="flower-yellow-1" cx="780" cy="355" r="15" class="paintable" />
+    <line x1="820" y1="400" x2="820" y2="365" class="fixed-decor" /><circle id="flower-white-1" cx="820" cy="365" r="12" class="paintable init-black" />
+  </svg>
+
+  <div class="palette">
+    <div class="color-circle pink" data-color="pink"></div>
+    <div class="color-circle white" data-color="white"></div>
+    <div class="color-circle black" data-color="black"></div>
+    <div class="color-circle red" data-color="red"></div>
+    <div class="color-circle orange" data-color="orange"></div>
+    <div class="color-circle purple" data-color="purple"></div>
+    <div class="color-circle blue" data-color="blue"></div>
+    <div class="color-circle brown" data-color="brown"></div>
+    <div class="color-circle gray" data-color="gray"></div>
+    <div class="color-circle green" data-color="green"></div>
+    <div class="color-circle yellow" data-color="yellow"></div>
+  </div>
+</div>
+<div id="modal-instrucciones" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+  <div style="background: white; padding: 30px; border-radius: 15px; text-align: center;">
+    <h2>¿Cómo jugar?</h2> <h2>Pintar el paisaje</h2>
+    <p>1. Toca el espacio en blanco que quieres pintar.<br>2. Escucha el color en ingles.<br> 3. En la paleta de colores toca el color que escuchaste y toca el espacio para pintarlo!</p>
+    <button onclick="this.parentElement.parentElement.style.display='none'" style="padding: 10px 20px;">Start Game</button>
+  </div>
+</div>
+<script>
+const elementsConfig = {
+  'sun': { color: 'yellow', word: 'Yellow' },
+  'cloud-left': { color: 'white', word: 'White' },
+  'cloud-center': { color: 'white', word: 'White' },
+  'volcano-left': { color: 'green', word: 'Green' },
+  'volcano-center': { color: 'green', word: 'Green' },
+  'volcano-right': { color: 'green', word: 'Green' },
+  'tree-leaves': { color: 'green', word: 'Green' },
+  'tree-trunk': { color: 'brown', word: 'Brown' },
+  'fruit-1': { color: 'red', word: 'Red' }, 'fruit-2': { color: 'red', word: 'Red' }, 'fruit-3': { color: 'orange', word: 'Orange' }, 'fruit-4': { color: 'red', word: 'Red' }, 'fruit-5': { color: 'orange', word: 'Orange' },
+  'rabbit-body': { color: 'white', word: 'White' }, 'rabbit-head': { color: 'white', word: 'White' }, 'rabbit-ear-1': { color: 'white', word: 'White' }, 'rabbit-ear-2': { color: 'white', word: 'White' },
+  'pathway': { color: 'brown', word: 'Brown' },
+  'house-base': { color: 'gray', word: 'Gray' }, 'house-roof': { color: 'red', word: 'Red' }, 'house-door': { color: 'orange', word: 'Orange' }, 'house-window': { color: 'yellow', word: 'Yellow' },
+  'kid-head': { color: 'yellow', word: 'Yellow' }, 'kid-hat': { color: 'red', word: 'Red' }, 'kid-body': { color: 'blue', word: 'Blue' }, 'kid-hand-left': { color: 'yellow', word: 'Yellow' }, 'kid-hand-right': { color: 'yellow', word: 'Yellow' }, 'kid-leg-left': { color: 'blue', word: 'Blue' }, 'kid-leg-right': { color: 'blue', word: 'Blue' },
+  'flower-pink-1': { color: 'pink', word: 'Pink' }, 'flower-red-1': { color: 'red', word: 'Red' }, 'flower-purple-1': { color: 'purple', word: 'Purple' }, 'flower-orange-1': { color: 'orange', word: 'Orange' }, 'flower-blue-1': { color: 'blue', word: 'Blue' }, 'flower-yellow-1': { color: 'yellow', word: 'Yellow' }, 'flower-white-1': { color: 'white', word: 'White' }
+};
+
+let selectedColor = null;
+let completedCount = 0;
+const totalElements = Object.keys(elementsConfig).length;
+const speakerBtn = document.getElementById('speaker-btn');
+
+function playAudio(text) {
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  window.speechSynthesis.speak(utterance);
+}
+
+document.querySelectorAll('.color-circle').forEach(c => {
+  c.addEventListener('click', (e) => {
+    document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected'));
+    selectedColor = e.currentTarget.getAttribute('data-color');
+    e.currentTarget.classList.add('selected');
+    playAudio(selectedColor);
+  });
+});
+
+document.querySelectorAll('.paintable').forEach(item => {
+  item.addEventListener('click', (e) => {
+    const config = elementsConfig[e.target.id];
+    if (config) {
+      if (selectedColor === config.color) {
+        e.target.style.setProperty('fill', getHex(selectedColor), 'important');
+        e.target.classList.remove('init-black');
+        completedCount++;
+        if (completedCount >= totalElements) {
+          speakerBtn.textContent = "✨ Work Finished! Well Done! ✨";
+          playAudio("Exellent job");
+        } else {
+          playAudio("excellent job");
+        }
+      } else {
+        playAudio(config.word);
+        speakerBtn.textContent = `🔊 "${config.word}!"`;
+      }
+    }
+  });
+});
+
+function getHex(name) {
+  const map = { pink: '#e91e63', white: '#ffffff', black: '#000000', red: '#f44336', orange: '#ff9800', purple: '#9c27b0', blue: '#2196f3', brown: '#795548', gray: '#9e9e9e', green: '#4caf50', yellow: '#ffeb3b' };
+  return map[name];
+}
+</script>
+</body>
+</html>

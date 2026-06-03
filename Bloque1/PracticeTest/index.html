@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Practice Game 🌟</title>
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --background: #F7FFF7;
+            --dark: #1A535C;
+            --yellow: #FFE66D;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--dark);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            user-select: none;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border: 5px solid var(--secondary);
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #E0E0E0;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            height: 15px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .audio-button {
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            font-size: 60px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(255, 107, 107, 0.4);
+            transition: transform 0.2s;
+            margin: 20px 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .audio-button:active { transform: scale(0.9); }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .option-card {
+            background: #f9f9f9;
+            border: 4px solid #E0E0E0;
+            border-radius: 20px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1 / 1;
+        }
+
+        .option-card:hover { transform: translateY(-5px); border-color: var(--secondary); }
+
+        .screen { display: none; }
+        .screen.active { display: block; }
+
+        .stars-container { display: flex; justify-content: center; gap: 8px; margin: 20px 0; }
+        .star { font-size: 40px; color: #ccc; }
+        .star.active { color: var(--yellow); }
+
+        .review-section { background: #FFF5F5; border: 3px dashed var(--primary); border-radius: 20px; padding: 20px; margin-top: 25px; }
+        .review-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 10px; }
+        .review-item { display: flex; flex-direction: column; align-items: center; font-size: 30px; }
+
+        .btn-restart { background: var(--secondary); color: white; border: none; padding: 15px 40px; font-size: 24px; font-weight: bold; border-radius: 50px; margin-top: 25px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div id="game-screen" class="screen active">
+            <div class="progress-container"><div id="progress-bar" class="progress-bar"></div></div>
+            <button class="audio-button" onclick="playCurrentWordAudio()">🔊</button>
+            <div class="options-grid" id="options-grid"></div>
+        </div>
+
+        <div id="result-screen" class="screen">
+            <h2>Result!</h2>
+            <div class="stars-container" id="stars-container"></div>
+            <div id="review-section" class="review-section" style="display: none;">
+                <div style="font-weight:bold; color:var(--primary)">Let's Review:</div>
+                <div class="review-grid" id="review-grid"></div>
+            </div>
+            <button class="btn-restart" onclick="restartGame()">🔄 TRY AGAIN</button>
+        </div>
+    </div>
+
+    <script>
+        const vocabularyData = [
+            { word: "Nose", emoji: "👃" },
+            { word: "Finger", emoji: "👆" },
+            { word: "Arm", emoji: "💪" },
+            { word: "Foot", emoji: "🦶" },
+            { word: "Yellow", emoji: "🟡" },
+            { word: "Red", emoji: "🔴" },
+            { word: "Green", emoji: "🟢" },
+            { word: "Blue", emoji: "🔵" },
+            { word: "Cat", emoji: "🐱" },
+            { word: "Dog", emoji: "🐶" }
+        ];
+
+        let gameWords = [], currentQuestionIndex = 0, score = 0, wordsToReview = [];
+
+        function speakWord(text) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.85;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function playCurrentWordAudio() { speakWord(gameWords[currentQuestionIndex].word); }
+
+        function startGame() {
+            gameWords = [...vocabularyData].sort(() => Math.random() - 0.5);
+            currentQuestionIndex = 0; score = 0; wordsToReview = [];
+            document.getElementById('game-screen').classList.add('active');
+            document.getElementById('result-screen').classList.remove('active');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= gameWords.length) return showResults();
+            document.getElementById('progress-bar').style.width = (currentQuestionIndex / gameWords.length) * 100 + '%';
+            
+            const currentObj = gameWords[currentQuestionIndex];
+            let options = [currentObj, ...vocabularyData.filter(i => i.word !== currentObj.word).sort(() => Math.random() - 0.5).slice(0, 3)].sort(() => Math.random() - 0.5);
+
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            options.forEach(opt => {
+                const card = document.createElement('div');
+                card.className = 'option-card';
+                card.innerText = opt.emoji;
+                card.onclick = () => checkAnswer(opt.word);
+                grid.appendChild(card);
+            });
+            setTimeout(() => speakWord(currentObj.word), 500);
+        }
+
+        function checkAnswer(selected) {
+            if (selected === gameWords[currentQuestionIndex].word) score++;
+            else if (!wordsToReview.find(i => i.word === gameWords[currentQuestionIndex].word)) wordsToReview.push(gameWords[currentQuestionIndex]);
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function showResults() {
+            document.getElementById('game-screen').classList.remove('active');
+            document.getElementById('result-screen').classList.add('active');
+            const stars = document.getElementById('stars-container');
+            stars.innerHTML = '';
+            for (let i = 0; i < gameWords.length; i++) stars.innerHTML += `<span class="star ${i < score ? 'active' : ''}">★</span>`;
+            
+            const reviewGrid = document.getElementById('review-grid');
+            reviewGrid.innerHTML = '';
+            if (wordsToReview.length > 0) {
+                document.getElementById('review-section').style.display = 'block';
+                wordsToReview.forEach(item => reviewGrid.innerHTML += `<div class="review-item" onclick="speakWord('${item.word}')">${item.emoji}</div>`);
+            } else {
+                document.getElementById('review-section').style.display = 'none';
+            }
+        }
+
+        function restartGame() { startGame(); }
+        window.onload = startGame;
+    </script>
+</body>
+</html>

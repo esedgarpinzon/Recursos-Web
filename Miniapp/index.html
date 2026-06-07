@@ -3,22 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UEC English App</title>
+    <title>UEC English Test</title>
     <style>
         body { text-align: center; font-family: sans-serif; background-color: #f0f8ff; padding: 20px; }
         .screen { display: none; }
         .active { display: block; }
         .main-btn { padding: 20px 40px; font-size: 20px; margin: 15px; cursor: pointer; border-radius: 20px; border: none; background: #4ECDC4; color: white; transition: 0.3s; }
         .main-btn:hover { background: #45b7af; }
-
-        /* Estilos de Tarjetas con Giro */
-        .card-container { width: 120px; height: 120px; perspective: 1000px; margin: 10px; cursor: pointer; display: inline-block; }
-        .card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
-        .card-inner.flipped { transform: rotateY(180deg); }
-        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 50px; border: 3px solid #e67e22; }
-        .card-front { background: white; }
-        .card-back { background: #fff3e0; transform: rotateY(180deg); font-size: 18px; font-weight: bold; padding: 5px; box-sizing: border-box; }
-        .card-grid { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
 
         /* Estilos del Test */
         .options-container { display: flex; justify-content: center; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
@@ -29,115 +20,216 @@
         .star { color: #ccc; } .star.filled { color: #FFD700; }
         .review-section { margin-top: 20px; padding: 20px; border-top: 2px solid #ccc; display: none; }
         .review-grid { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
+
+        /* Estilos de la bocina con palabra */
+        .audio-container { margin: 20px 0; }
+        .audio-btn { padding: 15px 30px; font-size: 24px; cursor: pointer; border-radius: 15px; border: none; background: #3498db; color: white; transition: 0.3s; }
+        .audio-btn:hover { background: #2980b9; }
+        .word-display { font-size: 32px; font-weight: bold; color: #e67e22; margin-top: 15px; min-height: 50px; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
-    <!-- MENÚ PRINCIPAL -->
-    <div id="home-screen" class="screen active">
-        <h1>Welcome to UEC Academy!</h1>
-        <button class="main-btn" onclick="showScreen('study-screen')">📚 Review Vocabulary</button>
-        <button class="main-btn" onclick="showScreen('test-screen')">🎮 Start Test</button>
-    </div>
-
-    <!-- PANTALLA DE REPASO -->
-    <div id="study-screen" class="screen">
-        <h2>Click to hear the words!</h2>
-        <div id="flashcards" class="card-grid"></div>
-        <br><button class="main-btn" onclick="showScreen('home-screen')">⬅️ Back to Menu</button>
-    </div>
-
     <!-- PANTALLA DEL TEST -->
-    <div id="test-screen" class="screen">
+    <div id="test-screen" class="screen active">
         <h2 id="instruction">Listen!</h2>
-        <button onclick="playTargetWord()">🔊 Hear the word</button>
+        
+        <div class="audio-container">
+            <button class="audio-btn" onclick="playTargetWord()">🔊 Hear the word</button>
+            <div class="word-display" id="word-display"></div>
+        </div>
+
         <div class="drop-zone" id="drop-zone" ondrop="drop(event)" ondragover="allowDrop(event)">Drop here</div>
         <div class="options-container" id="options"></div>
+        
         <div id="result-screen" style="display:none;">
             <div class="stars-container" id="stars"></div>
             <div id="review-section" class="review-section">
                 <h3>Let's Review! (Click to hear)</h3>
                 <div class="review-grid" id="review-grid"></div>
             </div>
-            <button class="main-btn" onclick="location.reload()">Play Again</button>
+            <button class="main-btn" onclick="restartGame()">Play Again</button>
         </div>
-        <br><button class="main-btn" onclick="showScreen('home-screen')">⬅️ Back to Menu</button>
     </div>
 
     <script>
-        function showScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
-        const questions = [
-            { word: "Hand", options: ["🦶", "✋", "👂"], correct: "✋" },
-            { word: "Foot", options: ["👀", "✋", "🦶"], correct: "🦶" },
-            { word: "Toes", options: ["🦶", "👣", "🖐️"], correct: "👣" },
-            { word: "Broccoli", options: ["🥦", "🍕", "🍿"], correct: "🥦" },
-            { word: "Finger", options: ["👄", "👃", "👈"], correct: "👈" },
-            { word: "Popcorn", options: ["🍿", "🍕", "🥦"], correct: "🍿" },
-            { word: "Purple", options: ["🟤", "🟣", "⚪"], correct: "🟣" },
-            { word: "Brown", options: ["⚪", "🟣", "🟤"], correct: "🟤" },
-            { word: "Teacher", options: ["👨‍🚒", "👩‍🏫", "👷"], correct: "👩‍🏫" },
-            { word: "White", options: ["⚪", "🟣", "🟤"], correct: "⚪" },
-            { word: "Pink", options: ["🔵", "🟡", "🌸"], correct: "🌸" },
-            { word: "Firefighter", options: ["👨‍🚒", "👩‍🏫", "👷"], correct: "👨‍🚒" },
-            { word: "Gray", options: ["🔵", "🩶", "🟡"], correct: "🩶" },
-            { word: "Ears", options: ["👂", "👀", "👄"], correct: "👂" },
-            { word: "Pizza", options: ["🍿", "🍕", "🥦"], correct: "🍕" }
+        // Lista completa de palabras
+        const allWords = [
+            { word: "Mouse", emoji: "🐭" }, { word: "Elephant", emoji: "🐘" }, { word: "Lion", emoji: "🦁" },
+            { word: "Tiger", emoji: "🐯" }, { word: "Dinosaur", emoji: "🦖" }, { word: "Cat", emoji: "🐱" },
+            { word: "Dog", emoji: "🐶" }, { word: "Fish", emoji: "🐟" }, { word: "Frog", emoji: "🐸" },
+            { word: "Horse", emoji: "🐎" }, { word: "Rat", emoji: "🐀" }, { word: "Panda", emoji: "🐼" },
+            { word: "Car", emoji: "🚗" }, { word: "Guitar", emoji: "🎸" }, { word: "Piano", emoji: "🎹" },
+            { word: "Telephone", emoji: "☎️" }, { word: "Ball", emoji: "⚽" }, { word: "Teddy bear", emoji: "🧸" },
+            { word: "Block", emoji: "🧱" }, { word: "Doll", emoji: "🪆" }, { word: "Kite", emoji: "🪁" },
+            { word: "Plane", emoji: "✈️" }, { word: "Robot", emoji: "🤖" }, { word: "Train", emoji: "🚂" },
+            { word: "Lava", emoji: "🌋" }, { word: "Banana", emoji: "🍌" }, { word: "Apple", emoji: "🍎" },
+            { word: "Pear", emoji: "🍐" }, { word: "Peach", emoji: "🍑" }, { word: "Orange", emoji: "🍊" },
+            { word: "Melon", emoji: "🍈" }, { word: "Mango", emoji: "🥭" }, { word: "Lemon", emoji: "🍋" },
+            { word: "Broccoli", emoji: "🥦" }, { word: "Ice cream", emoji: "🍦" }, { word: "Donuts", emoji: "🍩" },
+            { word: "Juice", emoji: "🧃" }, { word: "Popcorn", emoji: "🍿" }, { word: "Pizza", emoji: "🍕" },
+            { word: "Soup", emoji: "🥣" }, { word: "Jacket", emoji: "🧥" }, { word: "Blouse", emoji: "👚" },
+            { word: "Socks", emoji: "🧦" }, { word: "Shoe", emoji: "👟" }, { word: "Boot", emoji: "👢" },
+            { word: "Shirt", emoji: "👕" }, { word: "Scarf", emoji: "🧣" }, { word: "Hat", emoji: "👒" },
+            { word: "Tie", emoji: "👔" }, { word: "Finger", emoji: "👈" }, { word: "Nose", emoji: "👃" },
+            { word: "Chin", emoji: "🤔" }, { word: "Arm", emoji: "💪" }, { word: "Leg", emoji: "🦵" },
+            { word: "Foot", emoji: "🦶" }, { word: "Knees", emoji: "🧎" }, { word: "Toes", emoji: "👣" },
+            { word: "Eyes", emoji: "👀" }, { word: "Ear", emoji: "👂" }, { word: "Mouth", emoji: "👄" },
+            { word: "Hand", emoji: "✋" }, { word: "Chef", emoji: "👨‍🍳" }, { word: "Doctor", emoji: "👩‍⚕️" },
+            { word: "Firefighter", emoji: "👨‍🚒" }, { word: "Pilot", emoji: "👨‍✈️" }, { word: "Teacher", emoji: "👩‍🏫" },
+            { word: "Construction worker", emoji: "👷" }, { word: "Dentist", emoji: "🦷" }, { word: "Carpenter", emoji: "🔨" },
+            { word: "Soccer player", emoji: "🧑‍⚽" }, { word: "Farmer", emoji: "🧑‍🌾" }, { word: "Artist", emoji: "🎨" },
+            { word: "Astronaut", emoji: "👨‍🚀" }, { word: "Yellow", emoji: "🟡" }, { word: "Red", emoji: "🔴" },
+            { word: "Black", emoji: "⚫" }, { word: "White", emoji: "⚪" }, { word: "Gray", emoji: "🩶" },
+            { word: "Green", emoji: "🟢" }, { word: "Brown", emoji: "🤎" }, { word: "Blue", emoji: "🔵" },
+            { word: "Orange", emoji: "🟠" }, { word: "Pink", emoji: "🩷" }
         ];
 
-        // Generar Tarjetas
-        const flashContainer = document.getElementById('flashcards');
-        questions.forEach(q => {
-            const container = document.createElement('div');
-            container.className = 'card-container';
-            container.innerHTML = `<div class="card-inner"><div class="card-front">${q.correct}</div><div class="card-back">${q.word}</div></div>`;
-            container.onclick = () => {
-                const inner = container.querySelector('.card-inner');
-                speakWord(q.word);
-                inner.classList.add('flipped');
-                setTimeout(() => inner.classList.remove('flipped'), 1500);
-            };
-            flashContainer.appendChild(container);
-        });
+        let questions = [];
+        let currentQ = 0;
+        let score = 0;
+        let missed = [];
 
-        // Lógica del Test
-        let currentQ = 0, score = 0, missed = [];
-        function speakWord(text) { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; speechSynthesis.speak(u); }
-        function loadQuestion() {
-            const q = questions[currentQ];
-            document.getElementById('instruction').innerText = "Question " + (currentQ + 1);
-            const optContainer = document.getElementById('options');
-            optContainer.innerHTML = '';
-            q.options.forEach(emoji => {
-                const box = document.createElement('div');
-                box.innerText = emoji; box.className = 'draggable'; box.draggable = true;
-                box.id = emoji; box.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
-                optContainer.appendChild(box);
-            });
-            document.getElementById('drop-zone').innerHTML = "Drop here";
+        // Generar preguntas aleatorias
+        function generateRandomQuestions() {
+            const shuffled = [...allWords].sort(() => Math.random() - 0.5);
+            const numQuestions = 10;
+            const generatedQuestions = [];
+            
+            for (let i = 0; i < numQuestions; i++) {
+                const correctWord = shuffled[i];
+                
+                // Obtener 2 palabras incorrectas aleatorias
+                const otherWords = shuffled
+                    .filter(w => w.word !== correctWord.word)
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 2);
+                
+                // Mezclar las opciones
+                const options = [
+                    correctWord.emoji,
+                    otherWords[0].emoji,
+                    otherWords[1].emoji
+                ].sort(() => Math.random() - 0.5);
+                
+                generatedQuestions.push({
+                    word: correctWord.word,
+                    options: options,
+                    correct: correctWord.emoji
+                });
+            }
+            
+            return generatedQuestions;
         }
-        function playTargetWord() { speakWord(questions[currentQ].word); }
-        function allowDrop(e) { e.preventDefault(); }
+
+        // Reproducir palabra y mostrar texto por 1 segundo
+        function speakWord(text) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'en-US';
+            speechSynthesis.speak(u);
+        }
+
+        function playTargetWord() {
+            const q = questions[currentQ];
+            const wordDisplay = document.getElementById('word-display');
+            
+            speakWord(q.word);
+            wordDisplay.innerText = q.word;
+            
+            setTimeout(() => {
+                wordDisplay.innerText = '';
+            }, 1000);
+        }
+
+        function allowDrop(e) {
+            e.preventDefault();
+        }
+
         function drop(e) {
             e.preventDefault();
             const data = e.dataTransfer.getData("text");
-            if (data === questions[currentQ].correct) score++; else missed.push(questions[currentQ]);
+            
+            if (data === questions[currentQ].correct) {
+                score++;
+            } else {
+                missed.push(questions[currentQ]);
+            }
+            
             currentQ++;
-            if (currentQ < questions.length) loadQuestion(); else showResults();
-        }
-        function showResults() {
-            document.getElementById('instruction').style.display = 'none'; document.getElementById('drop-zone').style.display = 'none'; document.getElementById('options').style.display = 'none'; document.getElementById('result-screen').style.display = 'block';
-            const finalGrade = Math.round((score / questions.length) * 10);
-            const starContainer = document.getElementById('stars');
-            for (let i = 0; i < 10; i++) starContainer.innerHTML += `<span class="star ${i < finalGrade ? 'filled' : ''}">★</span>`;
-            if (missed.length > 0) {
-                document.getElementById('review-section').style.display = 'block';
-                missed.forEach(m => document.getElementById('review-grid').innerHTML += `<div class="review-item-box" onclick="speakWord('${m.word}')">${m.correct}</div>`);
+            
+            if (currentQ < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
             }
         }
+
+        function loadQuestion() {
+            const q = questions[currentQ];
+            document.getElementById('instruction').innerText = "Question " + (currentQ + 1);
+            document.getElementById('word-display').innerText = '';
+            
+            const optContainer = document.getElementById('options');
+            optContainer.innerHTML = '';
+            
+            q.options.forEach(emoji => {
+                const box = document.createElement('div');
+                box.innerText = emoji;
+                box.className = 'draggable';
+                box.draggable = true;
+                box.id = emoji;
+                box.ondragstart = (e) => e.dataTransfer.setData("text", e.target.id);
+                optContainer.appendChild(box);
+            });
+            
+            document.getElementById('drop-zone').innerHTML = "Drop here";
+        }
+
+        function showResults() {
+            document.getElementById('instruction').style.display = 'none';
+            document.getElementById('drop-zone').style.display = 'none';
+            document.getElementById('options').style.display = 'none';
+            document.querySelector('.audio-container').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            
+            const finalGrade = Math.round((score / questions.length) * 10);
+            const starContainer = document.getElementById('stars');
+            starContainer.innerHTML = '';
+            
+            for (let i = 0; i < 10; i++) {
+                starContainer.innerHTML += `<span class="star ${i < finalGrade ? 'filled' : ''}">★</span>`;
+            }
+            
+            if (missed.length > 0) {
+                document.getElementById('review-section').style.display = 'block';
+                const reviewGrid = document.getElementById('review-grid');
+                reviewGrid.innerHTML = '';
+                
+                missed.forEach(m => {
+                    reviewGrid.innerHTML += `<div class="review-item-box" onclick="speakWord('${m.word}')">${m.correct}</div>`;
+                });
+            }
+        }
+
+        function restartGame() {
+            currentQ = 0;
+            score = 0;
+            missed = [];
+            questions = generateRandomQuestions();
+            
+            document.getElementById('instruction').style.display = 'block';
+            document.getElementById('drop-zone').style.display = 'flex';
+            document.getElementById('options').style.display = 'flex';
+            document.querySelector('.audio-container').style.display = 'block';
+            document.getElementById('result-screen').style.display = 'none';
+            document.getElementById('review-section').style.display = 'none';
+            
+            loadQuestion();
+        }
+
+        // Inicializar el juego
+        questions = generateRandomQuestions();
         loadQuestion();
     </script>
 </body>

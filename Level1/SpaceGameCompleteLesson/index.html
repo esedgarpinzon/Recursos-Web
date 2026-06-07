@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Misión Espacial: Aprende Vocabulario</title>
+    <title>Space Words: Aprende Vocabulario</title>
     <style>
         /* --- ESTILO GENERAL Y TEMA ESPACIAL --- */
         body {
@@ -19,7 +19,6 @@
             overflow: hidden;
         }
 
-        /* Estrellas de fondo animadas */
         .stars {
             position: fixed;
             top: 0;
@@ -59,7 +58,6 @@
             z-index: 10;
         }
 
-        /* --- PERSONAJE Y TEXTO --- */
         .character {
             font-size: 5rem;
             margin-bottom: 10px;
@@ -140,7 +138,7 @@
 
         .option-btn:active {
             transform: translateY(8px);
-            box-shadow: 0 0 0 #990044, 0 0 0 rgba(0,0,0,0.4);
+            box-shadow: 0 0 0 #2c3e50, 0 0 0 rgba(0,0,0,0.4);
         }
 
         .option-btn:hover {
@@ -172,6 +170,52 @@
             margin: 20px 0;
             font-weight: bold;
         }
+
+        /* --- SECCIÓN DE REPASO (NUEVO) --- */
+        #review-section {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 50, 50, 0.15);
+            border: 2px dashed #ffaa00;
+            border-radius: 20px;
+        }
+        .review-title {
+            font-size: 1.4rem;
+            color: #ffaa00;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .review-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        .review-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .review-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        .review-emoji {
+            font-size: 3.5rem;
+        }
+        .review-hint {
+            font-size: 1rem;
+            color: #aaa;
+            margin-top: 15px;
+        }
+
         .restart-btn {
             margin-top: 30px;
             background: #00ff88;
@@ -231,7 +275,6 @@
             margin-top: 20px;
         }
 
-        /* Ocultar secciones dinámicamente */
         .hidden {
             display: none !important;
         }
@@ -253,9 +296,7 @@
                 <div class="word-display" id="word-display"></div>
             </div>
             
-            <div class="options-grid" id="options-container">
-                <!-- Las opciones se generan con JavaScript -->
-            </div>
+            <div class="options-grid" id="options-container"></div>
         </div>
 
         <!-- PANTALLA DE VICTORIA -->
@@ -264,6 +305,14 @@
             <div class="character">👨‍🚀🎉</div>
             <div class="victory-text">Excellent! Great job!</div>
             <div class="victory-text">Mission Accomplished!</div>
+            
+            <!-- NUEVA SECCIÓN DE REPASO -->
+            <div id="review-section">
+                <div class="review-title">📝 Palabras para repasar:</div>
+                <div class="review-grid" id="review-container"></div>
+                <div class="review-hint">(Toca cualquier imagen para escucharla de nuevo)</div>
+            </div>
+
             <button class="restart-btn" onclick="restartGame()">Jugar de nuevo</button>
         </div>
     </div>
@@ -275,102 +324,47 @@
     </div>
 
     <script>
-        // --- DATOS DEL JUEGO (LISTA ACTUALIZADA) ---
+        // --- DATOS DEL JUEGO ---
         const allWords = [
-            { text: "Mouse", emoji: "🐭" },
-            { text: "Elephant", emoji: "🐘" },
-            { text: "Lion", emoji: "🦁" },
-            { text: "Tiger", emoji: "🐯" },
-            { text: "Dinosaur", emoji: "🦖" },
-            { text: "Cat", emoji: "🐱" },
-            { text: "Dog", emoji: "🐶" },
-            { text: "Fish", emoji: "🐟" },
-            { text: "Frog", emoji: "🐸" },
-            { text: "Horse", emoji: "🐎" },
-            { text: "Rat", emoji: "🐀" },
-            { text: "Panda", emoji: "🐼" },
-            { text: "Car", emoji: "🚗" },
-            { text: "Guitar", emoji: "🎸" },
-            { text: "Piano", emoji: "🎹" },
-            { text: "Telephone", emoji: "☎️" },
-            { text: "Ball", emoji: "⚽" },
-            { text: "Teddy bear", emoji: "🧸" },
-            { text: "Block", emoji: "🧱" },
-            { text: "Doll", emoji: "🪆" },
-            { text: "Kite", emoji: "🪁" },
-            { text: "Plane", emoji: "✈️" },
-            { text: "Robot", emoji: "🤖" },
-            { text: "Train", emoji: "🚂" },
-            { text: "Lava", emoji: "🌋" },
-            { text: "Banana", emoji: "🍌" },
-            { text: "Apple", emoji: "🍎" },
-            { text: "Pear", emoji: "🍐" },
-            { text: "Peach", emoji: "🍑" },
-            { text: "Orange", emoji: "🍊" },
-            { text: "Melon", emoji: "🍈" },
-            { text: "Mango", emoji: "🥭" },
-            { text: "Lemon", emoji: "🍋" },
-            { text: "Broccoli", emoji: "🥦" },
-            { text: "Ice cream", emoji: "🍦" },
-            { text: "Donuts", emoji: "🍩" },
-            { text: "Juice", emoji: "🧃" },
-            { text: "Popcorn", emoji: "🍿" },
-            { text: "Pizza", emoji: "🍕" },
-            { text: "Soup", emoji: "🥣" },
-            { text: "Jacket", emoji: "🧥" },
-            { text: "Blouse", emoji: "👚" },
-            { text: "Socks", emoji: "🧦" },
-            { text: "Shoe", emoji: "👟" },
-            { text: "Boot", emoji: "👢" },
-            { text: "Shirt", emoji: "👕" },
-            { text: "Scarf", emoji: "🧣" },
-            { text: "Hat", emoji: "👒" },
-            { text: "Tie", emoji: "👔" },
-            { text: "Finger", emoji: "👈" },
-            { text: "Nose", emoji: "👃" },
-            { text: "Chin", emoji: "🤔" },
-            { text: "Arm", emoji: "💪" },
-            { text: "Leg", emoji: "🦵" },
-            { text: "Foot", emoji: "🦶" },
-            { text: "Knees", emoji: "🧎" },
-            { text: "Toes", emoji: "👣" },
-            { text: "Eyes", emoji: "👀" },
-            { text: "Ear", emoji: "👂" },
-            { text: "Mouth", emoji: "👄" },
-            { text: "Hand", emoji: "✋" },
-            { text: "Chef", emoji: "👨‍🍳" },
-            { text: "Doctor", emoji: "👩‍⚕️" },
-            { text: "Firefighter", emoji: "👨‍🚒" },
-            { text: "Pilot", emoji: "👨‍✈️" },
-            { text: "Teacher", emoji: "👩‍🏫" },
-            { text: "Construction worker", emoji: "👷" },
-            { text: "Dentist", emoji: "🦷" },
-            { text: "Carpenter", emoji: "🔨" },
-            { text: "Soccer player", emoji: "🧑‍⚽" },
-            { text: "Farmer", emoji: "🧑‍🌾" },
-            { text: "Artist", emoji: "🎨" },
-            { text: "Astronaut", emoji: "👨‍🚀" },
-            { text: "Yellow", emoji: "🟡" },
-            { text: "Red", emoji: "🔴" },
-            { text: "Black", emoji: "⚫" },
-            { text: "White", emoji: "⚪" },
-            { text: "Gray", emoji: "🩶" },
-            { text: "Green", emoji: "🟢" },
-            { text: "Brown", emoji: "🤎" },
-            { text: "Blue", emoji: "🔵" },
-            { text: "Orange", emoji: "🟠" },
-            { text: "Pink", emoji: "🩷" }
+            { text: "Mouse", emoji: "🐭" }, { text: "Elephant", emoji: "🐘" }, { text: "Lion", emoji: "🦁" },
+            { text: "Tiger", emoji: "🐯" }, { text: "Dinosaur", emoji: "🦖" }, { text: "Cat", emoji: "🐱" },
+            { text: "Dog", emoji: "🐶" }, { text: "Fish", emoji: "🐟" }, { text: "Frog", emoji: "🐸" },
+            { text: "Horse", emoji: "🐎" }, { text: "Rat", emoji: "🐀" }, { text: "Panda", emoji: "🐼" },
+            { text: "Car", emoji: "🚗" }, { text: "Guitar", emoji: "🎸" }, { text: "Piano", emoji: "🎹" },
+            { text: "Telephone", emoji: "☎️" }, { text: "Ball", emoji: "⚽" }, { text: "Teddy bear", emoji: "🧸" },
+            { text: "Block", emoji: "🧱" }, { text: "Doll", emoji: "🪆" }, { text: "Kite", emoji: "🪁" },
+            { text: "Plane", emoji: "✈️" }, { text: "Robot", emoji: "🤖" }, { text: "Train", emoji: "🚂" },
+            { text: "Lava", emoji: "🌋" }, { text: "Banana", emoji: "🍌" }, { text: "Apple", emoji: "🍎" },
+            { text: "Pear", emoji: "🍐" }, { text: "Peach", emoji: "🍑" }, { text: "Orange", emoji: "🍊" },
+            { text: "Melon", emoji: "🍈" }, { text: "Mango", emoji: "🥭" }, { text: "Lemon", emoji: "🍋" },
+            { text: "Broccoli", emoji: "🥦" }, { text: "Ice cream", emoji: "🍦" }, { text: "Donuts", emoji: "🍩" },
+            { text: "Juice", emoji: "🧃" }, { text: "Popcorn", emoji: "🍿" }, { text: "Pizza", emoji: "🍕" },
+            { text: "Soup", emoji: "🥣" }, { text: "Jacket", emoji: "🧥" }, { text: "Sweater", emoji: "🧶" },
+            { text: "Blouse", emoji: "👚" }, { text: "Sock", emoji: "🧦" }, { text: "Shoe", emoji: "👟" },
+            { text: "Boot", emoji: "👢" }, { text: "Shirt", emoji: "👕" }, { text: "Scarf", emoji: "🧣" },
+            { text: "Hat", emoji: "👒" }, { text: "Tie", emoji: "👔" }, { text: "Finger", emoji: "👈" },
+            { text: "Nose", emoji: "👃" }, { text: "Chin", emoji: "🤔" }, { text: "Arm", emoji: "💪" },
+            { text: "Leg", emoji: "🦵" }, { text: "Foot", emoji: "🦶" }, { text: "Knees", emoji: "🧎" },
+            { text: "Toes", emoji: "👣" }, { text: "Eyes", emoji: "👀" }, { text: "Ear", emoji: "👂" },
+            { text: "Mouth", emoji: "👄" }, { text: "Hand", emoji: "✋" }, { text: "Chef", emoji: "👨‍🍳" },
+            { text: "Doctor", emoji: "👩‍⚕️" }, { text: "Firefighter", emoji: "👨‍🚒" }, { text: "Pilot", emoji: "👨‍✈️" },
+            { text: "Teacher", emoji: "👩‍🏫" }, { text: "Construction worker", emoji: "👷" }, { text: "Dentist", emoji: "🦷" },
+            { text: "Carpenter", emoji: "🔨" }, { text: "Soccer player", emoji: "🧑‍⚽" }, { text: "Farmer", emoji: "🧑‍🌾" },
+            { text: "Artist", emoji: "🎨" }, { text: "Astronaut", emoji: "👨‍🚀" }, { text: "Yellow", emoji: "🟡" },
+            { text: "Red", emoji: "🔴" }, { text: "Black", emoji: "⚫" }, { text: "White", emoji: "⚪" },
+            { text: "Gray", emoji: "🩶" }, { text: "Green", emoji: "🟢" }, { text: "Brown", emoji: "🤎" },
+            { text: "Blue", emoji: "🔵" }, { text: "Orange", emoji: "🟠" }, { text: "Pink", emoji: "🩷" }
         ];
 
         let questions = [];
         let currentQuestionIndex = 0;
         let audioContext = null;
         let speechSynthesis = window.speechSynthesis;
+        let mistakes = []; // <-- NUEVO: Array para guardar los errores
 
-        // Generar preguntas aleatorias
         function generateQuestions() {
             const shuffled = [...allWords].sort(() => Math.random() - 0.5);
-            const numQuestions = Math.min(10, shuffled.length); // 10 preguntas por partida
+            const numQuestions = Math.min(10, shuffled.length);
             
             for (let i = 0; i < numQuestions; i++) {
                 const correctWord = shuffled[i];
@@ -389,7 +383,6 @@
             }
         }
 
-        // --- INICIALIZAR AUDIO ---
         function initAudio() {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -399,7 +392,6 @@
             }
         }
 
-        // Reproducir palabra usando Speech Synthesis
         function speakWord(text) {
             if ('speechSynthesis' in window) {
                 speechSynthesis.cancel();
@@ -411,7 +403,6 @@
             }
         }
 
-        // Reproducir palabra y mostrar/ocultar texto automáticamente a los 1 segundo
         function playWord() {
             initAudio();
             const q = questions[currentQuestionIndex];
@@ -425,47 +416,36 @@
             }, 1000);
         }
 
-        // Generar sonido "¡Ding!" (Celebración)
         function playDing() {
             initAudio();
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
-            
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
-            
             oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
             oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.1);
-            
             gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-            
             oscillator.start(audioContext.currentTime);
             oscillator.stop(audioContext.currentTime + 0.5);
         }
 
-        // Generar sonido "Oops" (Error)
         function playOops() {
             initAudio();
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
-            
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
-            
             oscillator.type = 'sawtooth';
             oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
             oscillator.frequency.linearRampToValueAtTime(100, audioContext.currentTime + 0.3);
-            
             gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-            
             oscillator.start(audioContext.currentTime);
             oscillator.stop(audioContext.currentTime + 0.3);
         }
 
-        // --- LÓGICA DEL JUEGO ---
         function loadQuestion() {
             const q = questions[currentQuestionIndex];
             document.getElementById('word-display').textContent = '';
@@ -476,7 +456,6 @@
             q.options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
-                // SOLO EL EMOJI, sin el texto
                 btn.innerHTML = `<div class="option-emoji">${opt.emoji}</div>`;
                 btn.onclick = () => checkAnswer(opt.isCorrect);
                 container.appendChild(btn);
@@ -496,9 +475,17 @@
                     }
                 }, 600);
             } else {
+                // <-- NUEVO: Guardar la palabra correcta de esta pregunta para el repaso final
+                const currentQ = questions[currentQuestionIndex];
+                const correctOpt = currentQ.options.find(opt => opt.isCorrect);
+                
+                // Solo la agregamos si no está ya en la lista (para no repetir)
+                if (!mistakes.some(m => m.text === correctOpt.text)) {
+                    mistakes.push({ text: correctOpt.text, emoji: correctOpt.emoji });
+                }
+                
                 playOops();
                 showMonster();
-                // Auto-ocultar después de 1.5 segundos
                 setTimeout(hideMonster, 1500);
             }
         }
@@ -515,6 +502,24 @@
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('victory-screen').style.display = 'block';
             
+            // <-- NUEVO: Lógica para mostrar el cuadro de repaso
+            const reviewSection = document.getElementById('review-section');
+            const reviewContainer = document.getElementById('review-container');
+            reviewContainer.innerHTML = ''; // Limpiar repaso anterior
+            
+            if (mistakes.length > 0) {
+                reviewSection.style.display = 'block';
+                mistakes.forEach(m => {
+                    const btn = document.createElement('button');
+                    btn.className = 'review-btn';
+                    btn.innerHTML = `<div class="review-emoji">${m.emoji}</div>`;
+                    btn.onclick = () => speakWord(m.text); // Al tocar, dice la palabra en inglés
+                    reviewContainer.appendChild(btn);
+                });
+            } else {
+                reviewSection.style.display = 'none'; // Si no hubo errores, se oculta el cuadro
+            }
+            
             setTimeout(() => {
                 const victoryText = "Excellent! Great job! Mission accomplished!";
                 speakWord(victoryText);
@@ -527,6 +532,7 @@
 
         function restartGame() {
             currentQuestionIndex = 0;
+            mistakes = []; // <-- NUEVO: Limpiar la lista de errores al reiniciar
             questions = [];
             generateQuestions();
             document.getElementById('victory-screen').style.display = 'none';
@@ -537,10 +543,7 @@
         // --- INICIO ---
         generateQuestions();
         loadQuestion();
-        
-        // Activar audio en el primer clic
         document.body.addEventListener('click', initAudio, { once: true });
-
     </script>
 </body>
 </html>

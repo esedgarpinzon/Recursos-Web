@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Balloon Pop English Game</title>
+    <title>UEC Academy - English Game</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
         /* =========================================
-           ESTILOS GENERALES Y ESTÉTICA INFANTIL
+           ESTILOS GENERALES
            ========================================= */
         :root {
-            --bg-color: #87CEEB;
             --bg-gradient: linear-gradient(to bottom, #87CEEB 0%, #E0F7FA 100%);
             --balloon-colors: #FF6B6B, #4ECDC4, #FFE66D, #FF9F43, #A29BFE, #FD79A8;
         }
 
         * {
             box-sizing: border-box;
-            touch-action: manipulation; /* Mejora la respuesta táctil en móviles */
+            touch-action: manipulation;
         }
 
         body {
@@ -28,16 +27,193 @@
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             user-select: none;
             -webkit-user-select: none;
         }
 
         /* =========================================
-           UI: CABECERA Y PALABRA OBJETIVO
+           MENÚ PRINCIPAL
            ========================================= */
+        #main-menu {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-gradient);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 500;
+        }
+
+        .main-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 10vmin;
+            color: #2D3436;
+            text-shadow: 3px 3px 0px #FFF;
+            margin-bottom: 5vh;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .menu-btn {
+            background: #fff;
+            border: 4px solid #4ECDC4;
+            border-radius: 20px;
+            padding: 3vh 6vw;
+            font-size: 5vmin;
+            font-family: 'Fredoka One', cursive;
+            color: #2D3436;
+            cursor: pointer;
+            margin: 2vh;
+            box-shadow: 0 6px 0 #2A9D8F, 0 10px 10px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+            width: 80vw;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .menu-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #2A9D8F, 0 4px 4px rgba(0,0,0,0.1);
+        }
+
+        .menu-btn.play-btn {
+            border-color: #FF9F43;
+            box-shadow: 0 6px 0 #E67E22, 0 10px 10px rgba(0,0,0,0.1);
+            background: #FFF5E6;
+        }
+
+        .menu-btn.play-btn:active {
+            box-shadow: 0 2px 0 #E67E22, 0 4px 4px rgba(0,0,0,0.1);
+        }
+
+        /* =========================================
+           BOTÓN HOME (Navegación)
+           ========================================= */
+        .home-btn {
+            position: absolute;
+            top: 2vh;
+            left: 2vw;
+            background: #fff;
+            border: 3px solid #FF9F43;
+            border-radius: 50%;
+            width: 10vmin;
+            height: 10vmin;
+            font-size: 5vmin;
+            cursor: pointer;
+            z-index: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 0 #E67E22;
+            transition: transform 0.1s;
+        }
+
+        .home-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #E67E22;
+        }
+
+        /* =========================================
+           PANTALLA DE REPASO (FLASHCARDS)
+           ========================================= */
+        #review-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-gradient);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            z-index: 400;
+            overflow-y: auto;
+            padding-top: 15vh;
+            padding-bottom: 5vh;
+        }
+
+        .review-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 6vmin;
+            color: #2D3436;
+            margin-bottom: 4vh;
+            text-align: center;
+            padding: 0 5vw;
+        }
+
+        #review-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4vmin;
+            width: 90vw;
+            max-width: 800px;
+        }
+
+        /* Animación 3D de la tarjeta */
+        .card {
+            background-color: transparent;
+            width: 25vmin;
+            height: 25vmin;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg) scale(1.05);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .card-front {
+            background-color: #FFF;
+            border: 4px solid #4ECDC4;
+            font-size: 12vmin;
+        }
+
+        .card-back {
+            background-color: #FFE66D;
+            border: 4px solid #FF9F43;
+            transform: rotateY(180deg);
+            font-family: 'Fredoka One', cursive;
+            font-size: 5vmin;
+            color: #2D3436;
+        }
+
+        /* =========================================
+           CONTENEDOR DEL JUEGO (Sin cambios en su lógica)
+           ========================================= */
+        #game-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
         #game-ui {
             position: absolute;
             top: 5vh;
@@ -87,9 +263,6 @@
             opacity: 1;
         }
 
-        /* =========================================
-           ÁREA DE JUEGO Y GLOBOS
-           ========================================= */
         #game-area {
             position: relative;
             width: 100%;
@@ -111,7 +284,6 @@
             z-index: 10;
         }
 
-        /* Contenedor interno del emoji para animar SOLO el emoji sin afectar la flotación del globo */
         .balloon-content {
             width: 100%;
             height: 100%;
@@ -122,7 +294,6 @@
             transition: filter 0.2s ease;
         }
 
-        /* La cuerda del globo */
         .balloon::after {
             content: '';
             position: absolute;
@@ -151,7 +322,6 @@
             transform: scale(0.95);
         }
 
-        /* Animación de flotar (solo afecta al globo) */
         @keyframes floatUp {
             0% { transform: translateY(0) rotate(0deg); }
             25% { transform: translateY(-25vh) rotate(2deg); }
@@ -160,7 +330,6 @@
             100% { transform: translateY(-120vh) rotate(0deg); }
         }
 
-        /* Animación de error (SOLO afecta al emoji interior, el globo sigue flotando) */
         @keyframes shake-emoji {
             0%, 100% { transform: translateX(0) rotate(0deg); }
             20% { transform: translateX(-1.5vmin) rotate(-10deg); }
@@ -171,10 +340,9 @@
 
         .shake-error .balloon-content {
             animation: shake-emoji 0.4s ease-in-out;
-            filter: brightness(0.7) sepia(1) hue-rotate(-50deg) saturate(5); /* Tinte rojo sutil */
+            filter: brightness(0.7) sepia(1) hue-rotate(-50deg) saturate(5);
         }
 
-        /* Animación de explosión */
         @keyframes pop {
             0% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.4); opacity: 0.8; }
@@ -186,9 +354,6 @@
             pointer-events: none;
         }
 
-        /* =========================================
-           PANTALLA FINAL Y REPASO
-           ========================================= */
         #end-screen {
             position: absolute;
             top: 0;
@@ -235,7 +400,12 @@
             padding: 2vmin;
             font-size: 6vmin;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            /* CORRECCIÓN: Se eliminó la animación 'floatUp' para que se queden quietas */
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .mistake-item:active {
+            transform: scale(0.9);
         }
 
         .restart-btn {
@@ -256,7 +426,6 @@
             box-shadow: 0 2px 0 #2A9D8F, 0 4px 4px rgba(0,0,0,0.2);
         }
 
-        /* Confeti simple */
         .confetti {
             position: absolute;
             width: 2vmin;
@@ -272,29 +441,42 @@
 </head>
 <body>
 
-    <!-- UI Superior -->
-    <div id="game-ui">
-        <button id="speaker-btn" onclick="playCurrentWord()">🔊</button>
-        <div id="target-word"></div>
+    <!-- MENÚ PRINCIPAL -->
+    <div id="main-menu">
+        <h1 class="main-title">Welcome to<br>UEC Academy 🎓</h1>
+        <button class="menu-btn" onclick="showReview()">Review Vocabulary 📚</button>
+        <button class="menu-btn play-btn" onclick="showGame()">Let's Play 🤩</button>
     </div>
 
-    <!-- Área donde flotan los globos -->
-    <div id="game-area"></div>
+    <!-- PANTALLA DE REPASO -->
+    <div id="review-screen">
+        <button class="home-btn" onclick="showMainMenu()">🏠</button>
+        <h2 class="review-title">Tap a card to listen! 👂</h2>
+        <div id="review-cards-container"></div>
+    </div>
 
-    <!-- Pantalla Final -->
-    <div id="end-screen">
-        <h1>¡Great Job! 🎉</h1>
-        <p>¡Lo hiciste muy bien!</p>
-        <div id="mistakes-title" style="display:none; font-size: 4vmin; color: #FF6B6B; font-weight: bold; margin-bottom: 2vh;">
-            Practiquemos estas un poco más:
+    <!-- CONTENEDOR DEL JUEGO -->
+    <div id="game-container">
+        <button class="home-btn" onclick="showMainMenu()">🏠</button>
+        <div id="game-ui">
+            <button id="speaker-btn" onclick="playCurrentWord()">🔊</button>
+            <div id="target-word"></div>
         </div>
-        <div id="mistakes-container"></div>
-        <button class="restart-btn" onclick="initGame()">Jugar Otra Vez 🔄</button>
+        <div id="game-area"></div>
+        <div id="end-screen">
+            <h1>¡Great Job! 🎉</h1>
+            <p>¡Lo hiciste muy bien!</p>
+            <div id="mistakes-title" style="display:none; font-size: 4vmin; color: #FF6B6B; font-weight: bold; margin-bottom: 2vh;">
+                Practiquemos estas un poco más (¡Tócalas para escuchar!):
+            </div>
+            <div id="mistakes-container"></div>
+            <button class="restart-btn" onclick="initGame()">Jugar Otra Vez 🔄</button>
+        </div>
     </div>
 
     <script>
         /* =========================================
-           1. CONFIGURACIÓN Y VOCABULARIO (EDITAR AQUÍ)
+           1. CONFIGURACIÓN Y VOCABULARIO
            ========================================= */
         const vocabulary = [
             { word: "Happy", emoji: "😀" },
@@ -309,9 +491,6 @@
 
         const balloonColors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#FF9F43', '#A29BFE', '#FD79A8', '#55E6C1'];
 
-        /* =========================================
-           2. VARIABLES DE ESTADO DEL JUEGO
-           ========================================= */
         let gameQueue = [];
         let currentIndex = 0;
         let mistakes = [];
@@ -319,7 +498,68 @@
         let speechSynth = window.speechSynthesis;
 
         /* =========================================
-           3. FUNCIONES DE AUDIO (Web Speech API + Oscilador)
+           2. NAVEGACIÓN ENTRE PANTALLAS
+           ========================================= */
+        function showMainMenu() {
+            document.getElementById('main-menu').style.display = 'flex';
+            document.getElementById('review-screen').style.display = 'none';
+            document.getElementById('game-container').style.display = 'none';
+            
+            // Detener cualquier proceso del juego que quede en segundo plano
+            isLevelActive = false;
+            speechSynth.cancel();
+            document.getElementById('game-area').innerHTML = '';
+        }
+
+        function showReview() {
+            document.getElementById('main-menu').style.display = 'none';
+            document.getElementById('review-screen').style.display = 'flex';
+            document.getElementById('game-container').style.display = 'none';
+            createReviewCards();
+        }
+
+        function showGame() {
+            document.getElementById('main-menu').style.display = 'none';
+            document.getElementById('review-screen').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+            initGame();
+        }
+
+        /* =========================================
+           3. LÓGICA DE REPASO (FLASHCARDS)
+           ========================================= */
+        function createReviewCards() {
+            const container = document.getElementById('review-cards-container');
+            container.innerHTML = '';
+            
+            vocabulary.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">${item.emoji}</div>
+                        <div class="card-back">${item.word}</div>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    if (!card.classList.contains('flipped')) {
+                        card.classList.add('flipped');
+                        speak(item.word);
+                        
+                        // Regresa a su posición normal después de 1.2 segundos
+                        setTimeout(() => {
+                            card.classList.remove('flipped');
+                        }, 1200);
+                    }
+                });
+                
+                container.appendChild(card);
+            });
+        }
+
+        /* =========================================
+           4. FUNCIONES DE AUDIO
            ========================================= */
         function speak(text) {
             if (speechSynth.speaking) speechSynth.cancel();
@@ -361,7 +601,7 @@
         }
 
         /* =========================================
-           4. LÓGICA DEL JUEGO
+           5. LÓGICA DEL JUEGO (Intacta)
            ========================================= */
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -377,7 +617,6 @@
             mistakes = [];
             document.getElementById('end-screen').style.display = 'none';
             document.getElementById('game-area').innerHTML = '';
-            
             loadLevel();
         }
 
@@ -413,7 +652,6 @@
             const delay = Math.random() * 2;
             balloon.style.animation = `floatUp ${duration}s linear ${delay}s infinite`;
 
-            // CORRECCIÓN: Contenido separado para que el emoji tiemble, pero el globo siga flotando sin desaparecer
             const content = document.createElement('div');
             content.className = 'balloon-content';
             content.textContent = data.emoji;
@@ -460,7 +698,6 @@
                     }
                 }, 800);
             } else {
-                // CORRECCIÓN: El globo NO desaparece. Solo el emoji interior tiembla y se pone rojo.
                 playErrorSound();
                 balloon.classList.add('shake-error');
                 
@@ -468,7 +705,6 @@
                     mistakes.push(data);
                 }
 
-                // Quitar la clase de error después de la animación para que pueda volver a intentarse
                 setTimeout(() => {
                     balloon.classList.remove('shake-error');
                 }, 400);
@@ -488,7 +724,16 @@
                     const div = document.createElement('div');
                     div.className = 'mistake-item';
                     div.textContent = m.emoji;
-                    div.title = m.word;
+                    div.title = "Toca para escuchar: " + m.word;
+                    
+                    div.addEventListener('click', () => {
+                        speak(m.word);
+                        div.style.transform = "scale(1.2)";
+                        setTimeout(() => {
+                            div.style.transform = "scale(1)";
+                        }, 200);
+                    });
+                    
                     mistakesContainer.appendChild(div);
                 });
                 speak("Great job! Let's review these ones.");
@@ -501,9 +746,6 @@
             launchFullConfetti();
         }
 
-        /* =========================================
-           5. EFECTOS VISUALES (CONFETI)
-           ========================================= */
         function createConfetti(rect) {
             const colors = ['#f00', '#0f0', '#00f', '#ff0', '#0ff', '#f0f'];
             for (let i = 0; i < 20; i++) {
@@ -543,7 +785,8 @@
             }
         }
 
-        window.onload = initGame;
+        // Iniciar en el menú principal
+        window.onload = showMainMenu;
     </script>
 </body>
 </html>

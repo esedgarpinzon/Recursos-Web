@@ -275,25 +275,31 @@
         color: white;
         transition: transform 0.2s;
         border: 3px solid #666;
-        position: relative;
-        z-index: 10;
-        margin-top: 5px;
-    }
-    .speaker:hover { transform: scale(1.1); }
-    .speaker:active { transform: scale(0.95); }
-    .speaker.playing { animation: speakerPulse 0.5s; }
-    @keyframes speakerPulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.2); background: #FFD700; }
-    }
+      
+        /* --- NUEVAS REGLAS DE POSICIÓN --- */
+    position: absolute;
+    top: -1px; /* Lo sube 65px por encima del borde del vagón */
+    left: 18%;
+    transform: translateX(-50%); /* Lo centra perfectamente */
+    z-index: 20; /* Asegura que esté por encima de todo y sea clicable */
+}
+   /* Mantenemos la animación que ya tenías */
+.speaker:hover { transform: translateX(-50%) scale(1.1); } /* Nota: agregué translateX para que no pierda el centro al hacer hover */
+.speaker:active { transform: translateX(-50%) scale(0.95); }
+.speaker.playing { animation: speakerPulse 0.5s; }
+
+@keyframes speakerPulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.2); background: #FFD700; }
+}
     
     .drop-zone {
         position: absolute;
-        top: -10px;
+        top: -76px;
         left: 50%;
-        transform: translateX(-50%);
-        width: 120px;
-        height: 80px;
+        transform: translateX(-35%);
+        width: 100px;
+        height: 150px;
         border: 3px dashed rgba(255,255,255,0.7);
         border-radius: 10px;
         display: flex;

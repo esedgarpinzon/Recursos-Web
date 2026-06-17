@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Fruit Train - UEC Academy</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+    
+    body {
+        font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+        overflow: hidden;
+        background: #87CEEB;
+        touch-action: none;
+    }
+    
+    .game-container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(to bottom, #87CEEB 0%, #B0E0E6 50%, #90EE90 50%, #228B22 100%);
+    }
+    
+    /* Welcome Screen */
+    .welcome-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 200;
+        padding: 20px;
+    }
+    
+    .welcome-title {
+        font-size: 48px;
+        color: #FFD700;
+        text-align: center;
+        margin-bottom: 10px;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        font-weight: bold;
+        animation: welcomeBounce 2s infinite;
+    }
+    
+    @keyframes welcomeBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .welcome-subtitle {
+        font-size: 24px;
+        color: white;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+    
+    .menu-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .menu-btn {
+        background: white;
+        border: none;
+        padding: 25px 40px;
+        font-size: 24px;
+        font-weight: bold;
+        border-radius: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        transition: all 0.3s;
+        color: #333;
+    }
+    
+    .menu-btn:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+    
+    .menu-btn:active {
+        transform: translateY(-2px) scale(0.98);
+    }
+    
+    .menu-btn.review {
+        background: #FFE4B5;
+        border: 4px solid #FFD700;
+    }
+    
+    .menu-btn.play {
+        background: #98FB98;
+        border: 4px solid #32CD32;
+    }
+    
+    .menu-btn .emoji {
+        font-size: 40px;
+    }
+    
+    /* Vocabulary Review Screen */
+    .review-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        z-index: 150;
+        padding: 20px;
+        overflow-y: auto;
+    }
+    
+    .review-screen.show {
+        display: flex;
+    }
+    
+    .review-header {
+        font-size: 32px;
+        color: #667eea;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .vocab-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 20px;
+        width: 100%;
+        max-width: 800px;
+        padding-bottom: 100px;
+    }
+    
+    .vocab-card {
+        width: 140px;
+        height: 180px;
+        perspective: 1000px;
+        cursor: pointer;
+        margin: 0 auto;
+    }
+    
+    .vocab-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    }
+    
+    .vocab-card.flipped .vocab-card-inner {
+        transform: rotateY(180deg);
+    }
+    
+    .vocab-card-front, .vocab-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        border: 4px solid #FFD700;
+    }
+    
+    .vocab-card-front {
+        background: white;
+        font-size: 80px;
+    }
+    
+    .vocab-card-front img {
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+    }
+    
+    .vocab-card-back {
+        background: #667eea;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        transform: rotateY(180deg);
+    }
+    
+    .back-btn {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 160;
+    }
+    
+    .back-btn:hover {
+        background: #5568d3;
+        transform: translateX(-50%) scale(1.05);
+    }
+    
+    /* Sun */
+    .sun {
+        position: absolute;
+        top: 250px;
+        right: 100px;
+        width: 80px;
+        height: 70px;
+        background: #FFD700;
+        border-radius: 50%;
+        box-shadow: 0 0 40px #FFD700;
+        animation: sunPulse 3s infinite;
+    }
+    @keyframes sunPulse {
+        0%, 100% { box-shadow: 0 0 40px #FFD700; }
+        50% { box-shadow: 0 0 60px #FFA500; }
+    }
+    
+    /* Clouds */
+    .cloud {
+        position: absolute;
+        background: white;
+        border-radius: 50px;
+        opacity: 0.9;
+        animation: cloudMove 30s linear infinite;
+    }
+    .cloud::before, .cloud::after {
+        content: '';
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+    }
+    .cloud1 { width: 80px; height: 25px; top: 60px; left: -100px; }
+    .cloud1::before { width: 40px; height: 40px; top: -20px; left: 10px; }
+    .cloud1::after { width: 30px; height: 30px; top: -15px; right: 10px; }
+    .cloud2 { width: 100px; height: 30px; top: 120px; left: -150px; animation-duration: 45s; animation-delay: -10s; }
+    .cloud2::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+    .cloud2::after { width: 40px; height: 40px; top: -20px; right: 15px; }
+    @keyframes cloudMove {
+        from { transform: translateX(0); }
+        to { transform: translateX(120vw); }
+    }
+    
+    /* Tree */
+    .tree {
+        position: absolute;
+        bottom: 49%;
+        left: 45%;
+        font-size: 80px;
+        z-index: 2;
+    }
+    
+    /* Train station */
+    .station {
+        position: absolute;
+        bottom: 50%;
+        left: 15%;
+        width: 200px;
+        height: 140px;
+        background: #8B4513;
+        border: 4px solid #654321;
+        border-radius: 10px 10px 0 0;
+        z-index: 3;
+    }
+    .station::before {
+        content: 'STATION';
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #654321;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .station-roof {
+        position: absolute;
+        top: -40px;
+        left: -10px;
+        width: 220px;
+        height: 20px;
+        background: #A52A2A;
+        border-radius: 5px;
+    }
+    
+    /* Farmer */
+    .farmer {
+        position: absolute;
+        bottom: 50%;
+        left: 22%;
+        font-size: 60px;
+        z-index: 4;
+        transform-origin: bottom center;
+        animation: farmerWave 3s infinite;
+    }
+    @keyframes farmerWave {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(-5deg); }
+    }
+    
+    /* Traffic light */
+    .traffic-light {
+        position: absolute;
+        bottom: 28%;
+        right: 15%;
+        width: 40px;
+        background: #333;
+        border-radius: 10px;
+        padding: 5px;
+        z-index: 5;
+    }
+    .light {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin: 3px auto;
+        background: #444;
+        transition: all 0.3s;
+    }
+    .light.red-on { background: #ff3030; box-shadow: 0 0 20px #ff3030; }
+    .light.green-on { background: #30ff30; box-shadow: 0 0 20px #30ff30; }
+    .light-pole {
+        position: absolute;
+        bottom: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 8px;
+        height: 80px;
+        background: #333;
+    }
+    
+    /* Train track */
+    .track {
+        position: absolute;
+        bottom: 19%;
+        left: 0;
+        width: 100%;
+        height: 30px;
+        background: #8B4513;
+        z-index: 1;
+    }
+    .track::before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: #666;
+    }
+    .track::after {
+        content: '';
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: #666;
+    }
+    
+    /* Train */
+    .train {
+        position: absolute;
+        bottom: 20%;
+        left: -600px;
+        display: flex;
+        align-items: flex-end;
+        z-index: 6;
+        transition: left 2s ease-in-out;
+    }
+    .train.arrived { left: 35%; }
+    .train.leaving { left: 120vw; transition: left 2.5s ease-in; }
+    
+    .locomotive {
+        width: 120px;
+        height: 100px;
+        background: #DC143C;
+        border-radius: 10px 20px 5px 5px;
+        position: relative;
+        border: 3px solid #8B0000;
+    }
+    .locomotive::before {
+        content: '';
+        position: absolute;
+        top: -20px;
+        left: 20px;
+        width: 25px;
+        height: 25px;
+        background: #333;
+        border-radius: 3px;
+    }
+    .locomotive-window {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        width: 40px;
+        height: 35px;
+        background: #87CEEB;
+        border: 2px solid #333;
+        border-radius: 5px;
+    }
+    .wheel {
+        position: absolute;
+        bottom: -12px;
+        width: 25px;
+        height: 25px;
+        background: #222;
+        border-radius: 50%;
+        border: 3px solid #666;
+    }
+    .wheel::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        background: #999;
+        border-radius: 50%;
+    }
+    .wheel1 { left: 10px; }
+    .wheel2 { right: 10px; }
+    
+    .wagon {
+        width: 140px;
+        height: 90px;
+        background: #4169E1;
+        border-radius: 8px;
+        margin-left: 5px;
+        position: relative;
+        border: 3px solid #00008B;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .wagon1 { background: #FF8C00; border-color: #8B4500; }
+    .wagon2 { background: #32CD32; border-color: #006400; }
+    
+    .speaker {
+        width: 50px;
+        height: 50px;
+        background: #333;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 28px;
+        color: white;
+        transition: transform 0.2s;
+        border: 3px solid #666;
+        position: absolute;
+        top: -1px;
+        left: 18%;
+        transform: translateX(-50%);
+        z-index: 20;
+    }
+    .speaker:hover { transform: translateX(-50%) scale(1.1); }
+    .speaker:active { transform: translateX(-50%) scale(0.95); }
+    .speaker.playing { animation: speakerPulse 0.5s; }
+
+    @keyframes speakerPulse {
+        0%, 100% { transform: translateX(-50%) scale(1); }
+        50% { transform: translateX(-50%) scale(1.2); background: #FFD700; }
+    }
+    
+    .drop-zone {
+        position: absolute;
+        top: -76px;
+        left: 50%;
+        transform: translateX(-35%);
+        width: 100px;
+        height: 150px;
+        border: 3px dashed rgba(255,255,255,0.7);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: white;
+        font-weight: bold;
+        z-index: 5;
+    }
+    .drop-zone.drag-over {
+        background: rgba(255,255,255,0.3);
+        border-color: #FFD700;
+    }
+    .drop-zone.filled {
+        border-style: solid;
+        border-color: #FFD700;
+        background: rgba(255,255,255,0.4);
+        font-size: 50px;
+    }
+    
+    /* Fruits area */
+    .fruits-area {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 30px;
+        z-index: 10;
+    }
+    
+    .fruit {
+        width: 110px;
+        height: 110px;
+        background: white;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: grab;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        border: 4px solid #FFD700;
+        transition: transform 0.3s, opacity 0.3s;
+        font-size: 70px;
+    }
+    .fruit img {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+    }
+    .fruit:hover { transform: scale(1.05) rotate(-3deg); }
+    .fruit.dragging { opacity: 0.5; cursor: grabbing; }
+    .fruit.returning {
+        animation: returnFruit 0.6s ease-out;
+    }
+    @keyframes returnFruit {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .fruit.placed { 
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+    
+    /* Word popup */
+    .word-popup {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 15px 40px;
+        border-radius: 15px;
+        font-size: 40px;
+        font-weight: bold;
+        color: #DC143C;
+        border: 5px solid #FFD700;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 20;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+    }
+    .word-popup.show { opacity: 1; animation: wordPop 0.3s; }
+    @keyframes wordPop {
+        0% { transform: translateX(-50%) scale(0.5); }
+        100% { transform: translateX(-50%) scale(1); }
+    }
+    
+    /* UI */
+    .ui-top {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255,255,255,0.95);
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 22px;
+        font-weight: bold;
+        color: #333;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        z-index: 15;
+        border: 3px solid #FFD700;
+    }
+    
+    .instruction {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255,215,0,0.95);
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        z-index: 15;
+        white-space: nowrap;
+    }
+    
+    /* Final screen */
+    .final-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.85);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        color: white;
+        padding: 20px;
+    }
+    .final-screen.show { display: flex; animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    
+    .money-sticker {
+        font-size: 120px;
+        animation: moneyBounce 1s infinite;
+    }
+    @keyframes moneyBounce {
+        0%, 100% { transform: translateY(0) rotate(-5deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    
+    .congrats-text {
+        font-size: 32px;
+        text-align: center;
+        margin: 20px 0;
+        color: #FFD700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        font-weight: bold;
+    }
+    
+    .review-box {
+        background: white;
+        color: #333;
+        padding: 20px;
+        border-radius: 15px;
+        max-width: 500px;
+        width: 100%;
+        max-height: 250px;
+        overflow-y: auto;
+        margin: 15px 0;
+        border: 4px solid #FFD700;
+    }
+    .review-box h3 {
+        color: #DC143C;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .review-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 8px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        margin-bottom: 8px;
+    }
+    .review-item .emoji { font-size: 40px; }
+    .review-item img { width: 40px; height: 40px; object-fit: contain; }
+    .review-item .play-btn {
+        background: #4169E1;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: auto;
+    }
+    .review-item .play-btn:hover { background: #1E90FF; }
+    .no-mistakes {
+        text-align: center;
+        font-size: 20px;
+        color: #32CD32;
+        font-weight: bold;
+    }
+    
+    .restart-btn {
+        background: #32CD32;
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 22px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        margin-top: 10px;
+        transition: transform 0.2s;
+    }
+    .restart-btn:hover { transform: scale(1.05); background: #228B22; }
+    
+    /* Confetti */
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: -10px;
+        z-index: 99;
+        animation: confettiFall 3s linear forwards;
+    }
+    @keyframes confettiFall {
+        to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Clones de frutas durante arrastre */
+    .fruit-clone {
+        pointer-events: none !important;
+        z-index: 9999 !important;
+    }
+
+    /* ==========================================
+       CONFIGURACIÓN UNIVERSAL (PC + MÓVIL)
+       ========================================== */
+    .game-container, .fruit, .speaker, .drop-zone {
+        touch-action: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ==========================================
+       RESPONSIVE - AJUSTES PARA MÓVIL
+       ========================================== */
+    @media (max-width: 768px), (orientation: portrait) {
+        .welcome-title {
+            font-size: 36px;
+        }
+        .welcome-subtitle {
+            font-size: 18px;
+        }
+        .menu-btn {
+            font-size: 20px;
+            padding: 20px 30px;
+        }
+        .menu-btn .emoji {
+            font-size: 32px;
+        }
+        .vocab-grid {
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 15px;
+        }
+        .vocab-card {
+            width: 110px;
+            height: 150px;
+        }
+        .vocab-card-front {
+            font-size: 60px;
+        }
+        .vocab-card-front img {
+            width: 70px;
+            height: 70px;
+        }
+        .vocab-card-back {
+            font-size: 18px;
+        }
+        .train.arrived {
+            left: 5% !important;
+        }
+        .train {
+            transform: scale(0.85);
+            transform-origin: bottom left;
+        }
+        .station {
+            left: 5% !important;
+            transform: scale(0.8);
+            transform-origin: bottom left;
+        }
+        .farmer {
+            left: 15% !important;
+        }
+        .traffic-light {
+            right: 5% !important;
+        }
+        .fruits-area {
+            gap: 15px;
+            bottom: 39%;
+        }
+        .fruit {
+            width: 85px;
+            height: 85px;
+            font-size: 55px;
+        }
+        .fruit img {
+            width: 55px;
+            height: 55px;
+        }
+        .ui-top {
+            font-size: 16px;
+            padding: 8px 15px;
+            top: 10px;
+        }
+        .instruction {
+            font-size: 14px;
+            top: 55px;
+            width: 90%;
+            text-align: center;
+            white-space: normal;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- Welcome Screen -->
+<div class="welcome-screen" id="welcome-screen">
+    <h1 class="welcome-title">WELCOME TO UEC Academy</h1>
+    <p class="welcome-subtitle">Let's review your lesson.</p>
+    <div class="menu-buttons">
+        <button class="menu-btn review" onclick="showReviewScreen()">
+            <span class="emoji">📚</span>
+            <span>Review Vocabulary</span>
+        </button>
+        <button class="menu-btn play" onclick="startGame()">
+            <span class="emoji">😄</span>
+            <span>Let's Play</span>
+        </button>
+    </div>
+</div>
+
+<!-- Vocabulary Review Screen -->
+<div class="review-screen" id="review-screen">
+    <h2 class="review-header">📚 Vocabulary Review</h2>
+    <div class="vocab-grid" id="vocab-grid"></div>
+    <button class="back-btn" onclick="backToWelcome()">← Back to Menu</button>
+</div>
+
+<div class="game-container" id="game-container">
+    <!-- Sky elements -->
+    <div class="sun"></div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    
+    <!-- Tree -->
+    <div class="tree">🌳</div>
+    
+    <!-- Station -->
+    <div class="station">
+        <div class="station-roof"></div>
+    </div>
+    
+    <!-- Farmer -->
+    <div class="farmer">👨‍🌾</div>
+    
+    <!-- Traffic light -->
+    <div class="traffic-light">
+        <div class="light" id="red-light"></div>
+        <div class="light" id="green-light"></div>
+        <div class="light-pole"></div>
+    </div>
+    
+    <!-- Track -->
+    <div class="track"></div>
+    
+    <!-- Train -->
+    <div class="train" id="train">
+        <div class="locomotive">
+            <div class="locomotive-window"></div>
+            <div class="wheel wheel1"></div>
+            <div class="wheel wheel2"></div>
+        </div>
+        <div class="wagon wagon1" id="wagon1">
+            <div class="drop-zone" id="drop1">DROP</div>
+            <div class="speaker" id="speaker1">🔊</div>
+            <div class="wheel wheel1"></div>
+            <div class="wheel wheel2"></div>
+        </div>
+        <div class="wagon wagon2" id="wagon2">
+            <div class="drop-zone" id="drop2">DROP</div>
+            <div class="speaker" id="speaker2">🔊</div>
+            <div class="wheel wheel1"></div>
+            <div class="wheel wheel2"></div>
+        </div>
+    </div>
+    
+    <!-- Fruits area -->
+    <div class="fruits-area" id="fruits-area"></div>
+    
+    <!-- Word popup -->
+    <div class="word-popup" id="word-popup"></div>
+    
+    <!-- UI -->
+    <div class="ui-top">🚂 Round: <span id="round-num">1</span> / 5</div>
+    <div class="instruction" id="instruction">🎧 Listen to the fruit, then drag it to the wagon!</div>
+</div>
+
+<!-- Final screen -->
+<div class="final-screen" id="final-screen">
+    <div class="money-sticker">💰</div>
+    <div class="congrats-text" id="congrats-text">
+        🎉 Congratulations! Great job! 🎉<br>
+        You brought all the fruits to the market!<br>
+        ⭐ Mission Accomplished! ⭐
+    </div>
+    <div class="review-box" id="review-box"></div>
+    <button class="restart-btn" onclick="backToWelcome()">🔄 Play Again!</button>
+</div>
+
+<script>
+const vocabulary = [
+    { id: 1, name: 'BAT', emoji: '🦇', image: 'img/bat.svg', useImage: true },
+    { id: 2, name: 'COW', emoji: '🐄', image: '', useImage: false },
+    { id: 3, name: 'RAT', emoji: '🐀', image: '', useImage: false },
+    { id: 4, name: 'BIRD', emoji: '🕊️', image: '', useImage: false },
+    { id: 5, name: 'Paper', emoji: '📄', image: '', useImage: false },
+    { id: 6, name: 'Crayon', emoji: '🖍️', image: '', useImage: false },
+    { id: 7, name: 'Marker', emoji: '🖋️', image: '', useImage: false },
+    { id: 8, name: 'Glue', emoji: '🧴', image: '', useImage: false },
+    { id: 9, name: 'Book', emoji: '📘', image: '', useImage: false },
+    { id: 10, name: 'Backpack', emoji: '🎒', image: '', useImage: false },
+    { id: 11, name: 'Eraser', emoji: '', image: 'img/eraser.svg', useImage: true },
+    { id: 12, name: 'Box', emoji: '📦', image: '', useImage: false },
+    { id: 13, name: 'Pencil', emoji: '✏️', image: '', useImage: false },
+    { id: 14, name: 'Chair', emoji: '🪑', image: '', useImage: false },
+    { id: 15, name: 'Table', emoji: '', image: 'img/table.svg', useImage: true }
+];
+
+let currentRound = 0;
+let totalRounds = 5;
+let rounds = [];
+let mistakes = [];
+let placedInWagon1 = null;
+let placedInWagon2 = null;
+let roundActive = false;
+
+// Navigation functions
+function showReviewScreen() {
+    document.getElementById('welcome-screen').style.display = 'none';
+    document.getElementById('review-screen').classList.add('show');
+    loadVocabularyCards();
+}
+
+function backToWelcome() {
+    document.getElementById('welcome-screen').style.display = 'flex';
+    document.getElementById('review-screen').classList.remove('show');
+    document.getElementById('final-screen').classList.remove('show');
+    document.getElementById('game-container').style.display = 'none';
+}
+
+function startGame() {
+    document.getElementById('welcome-screen').style.display = 'none';
+    document.getElementById('game-container').style.display = 'block';
+    generateRounds();
+    loadRound();
+}
+
+// Vocabulary Review Cards
+function loadVocabularyCards() {
+    const grid = document.getElementById('vocab-grid');
+    grid.innerHTML = '';
+    
+    vocabulary.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'vocab-card';
+        
+        const inner = document.createElement('div');
+        inner.className = 'vocab-card-inner';
+        
+        const front = document.createElement('div');
+        front.className = 'vocab-card-front';
+        
+        if (item.useImage) {
+            const img = document.createElement('img');
+            img.src = item.image;
+            img.alt = item.name;
+            front.appendChild(img);
+        } else {
+            front.textContent = item.emoji;
+        }
+        
+        const back = document.createElement('div');
+        back.className = 'vocab-card-back';
+        back.textContent = item.name;
+        
+        inner.appendChild(front);
+        inner.appendChild(back);
+        card.appendChild(inner);
+        
+        // Click/Tap to flip
+        card.addEventListener('click', () => flipCard(card, item));
+        card.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            flipCard(card, item);
+        });
+        
+        grid.appendChild(card);
+    });
+}
+
+function flipCard(card, item) {
+    // Flip all other cards back
+    document.querySelectorAll('.vocab-card').forEach(c => {
+        if (c !== card) c.classList.remove('flipped');
+    });
+    
+    // Toggle this card
+    card.classList.toggle('flipped');
+    
+    // Speak the word when flipped to back
+    if (card.classList.contains('flipped')) {
+        setTimeout(() => {
+            speak(item.name);
+        }, 300);
+        
+        // Auto flip back after 2 seconds
+        setTimeout(() => {
+            card.classList.remove('flipped');
+        }, 2000);
+    }
+}
+
+// ==========================================
+// FUNCIÓN CLAVE: DETECTAR DÓNDE SE SOLTÓ LA FRUTA
+// Usa elementFromPoint que funciona perfecto con escalas
+// ==========================================
+function getDropZoneAt(x, y) {
+    const element = document.elementFromPoint(x, y);
+    if (!element) return null;
+    
+    if (element.classList && element.classList.contains('drop-zone')) {
+        return element;
+    }
+    
+    const parent = element.closest('.drop-zone');
+    return parent;
+}
+
+function generateRounds() {
+    rounds = [];
+    for (let i = 0; i < totalRounds; i++) {
+        const shuffled = [...vocabulary].sort(() => Math.random() - 0.5);
+        const threeFruits = shuffled.slice(0, 3);
+        const shuffledCorrect = [...threeFruits].sort(() => Math.random() - 0.5);
+        const correct1 = shuffledCorrect[0];
+        const correct2 = shuffledCorrect[1];
+        const distractor = threeFruits.find(f => f.id !== correct1.id && f.id !== correct2.id);
+        
+        const wagonAssignment = Math.random() < 0.5 ? 
+            { wagon1: correct1, wagon2: correct2 } : 
+            { wagon1: correct2, wagon2: correct1 };
+        
+        rounds.push({
+            fruits: threeFruits.sort(() => Math.random() - 0.5),
+            wagon1: wagonAssignment.wagon1,
+            wagon2: wagonAssignment.wagon2,
+            distractor: distractor
+        });
+    }
+}
+
+function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.85;
+    utterance.pitch = 1.1;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+}
+
+function showWord(word) {
+    const popup = document.getElementById('word-popup');
+    popup.textContent = word;
+    popup.classList.add('show');
+    setTimeout(() => popup.classList.remove('show'), 1500);
+}
+
+function setTrafficLight(color) {
+    const red = document.getElementById('red-light');
+    const green = document.getElementById('green-light');
+    red.classList.remove('red-on');
+    green.classList.remove('green-on');
+    if (color === 'red') red.classList.add('red-on');
+    else if (color === 'green') green.classList.add('green-on');
+}
+
+function loadRound() {
+    if (currentRound >= totalRounds) {
+        showFinalScreen();
+        return;
+    }
+    
+    roundActive = false;
+    placedInWagon1 = null;
+    placedInWagon2 = null;
+    
+    // IMPORTANTE: Limpiar cualquier clone residual de rondas anteriores
+    document.querySelectorAll('.fruit-clone').forEach(c => c.remove());
+    
+    document.getElementById('round-num').textContent = currentRound + 1;
+    document.getElementById('instruction').textContent = '🚂 The train is arriving...';
+    
+    // Reset drop zones
+    const drop1 = document.getElementById('drop1');
+    const drop2 = document.getElementById('drop2');
+    drop1.innerHTML = 'DROP';
+    drop2.innerHTML = 'DROP';
+    drop1.classList.remove('filled');
+    drop2.classList.remove('filled');
+    
+    // Clear fruits area
+    document.getElementById('fruits-area').innerHTML = '';
+    
+    // Train arrives
+    const train = document.getElementById('train');
+    train.style.left = '';
+    train.style.transition = '';
+    train.classList.remove('leaving');
+    train.classList.remove('arrived');
+    setTrafficLight('red');
+    
+    void train.offsetWidth;
+    
+    setTimeout(() => {
+        train.classList.add('arrived');
+    }, 100);
+    
+    // Load fruits
+    setTimeout(() => {
+        const round = rounds[currentRound];
+        
+        const fruitsArea = document.getElementById('fruits-area');
+        round.fruits.forEach(fruit => {
+            const div = document.createElement('div');
+            div.className = 'fruit';
+            div.draggable = true;
+            div.dataset.id = fruit.id;
+            
+            if (fruit.useImage) {
+                const img = document.createElement('img');
+                img.src = fruit.image;
+                img.alt = fruit.name;
+                div.appendChild(img);
+            } else {
+                div.textContent = fruit.emoji;
+            }
+            
+            // === MOUSE (PC) ===
+            div.addEventListener('dragstart', (e) => {
+                if (!roundActive) { e.preventDefault(); return; }
+                e.dataTransfer.setData('text/plain', fruit.id);
+                div.classList.add('dragging');
+            });
+            div.addEventListener('dragend', () => {
+                div.classList.remove('dragging');
+            });
+            
+            // === TOUCH (MÓVIL) - VERSIÓN CORREGIDA ===
+            let touchOffsetX = 0, touchOffsetY = 0;
+            let clone = null;
+            let isDragging = false;
+            
+            div.addEventListener('touchstart', (e) => {
+                if (!roundActive) return;
+                e.preventDefault();
+                
+                const touch = e.touches[0];
+                const rect = div.getBoundingClientRect();
+                touchOffsetX = touch.clientX - rect.left;
+                touchOffsetY = touch.clientY - rect.top;
+                
+                clone = div.cloneNode(true);
+                clone.classList.add('fruit-clone');
+                clone.style.position = 'fixed';
+                clone.style.zIndex = '9999';
+                clone.style.pointerEvents = 'none';
+                clone.style.width = rect.width + 'px';
+                clone.style.height = rect.height + 'px';
+                clone.style.left = (touch.clientX - touchOffsetX) + 'px';
+                clone.style.top = (touch.clientY - touchOffsetY) + 'px';
+                clone.style.opacity = '0.9';
+                clone.style.transition = 'none';
+                document.body.appendChild(clone);
+                
+                div.style.opacity = '0.3';
+                isDragging = true;
+            }, { passive: false });
+            
+            div.addEventListener('touchmove', (e) => {
+                if (!clone || !isDragging) return;
+                e.preventDefault();
+                
+                const touch = e.touches[0];
+                clone.style.left = (touch.clientX - touchOffsetX) + 'px';
+                clone.style.top = (touch.clientY - touchOffsetY) + 'px';
+                
+                clone.style.display = 'none';
+                const dropZone = getDropZoneAt(touch.clientX, touch.clientY);
+                clone.style.display = '';
+                
+                if (dropZone && !dropZone.classList.contains('filled')) {
+                    dropZone.classList.add('drag-over');
+                }
+            }, { passive: false });
+            
+            div.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                
+                const touch = e.changedTouches[0];
+                
+                if (clone) {
+                    clone.remove();
+                    clone = null;
+                }
+                div.style.opacity = '1';
+                isDragging = false;
+                
+                document.querySelectorAll('.drop-zone').forEach(dz => {
+                    dz.classList.remove('drag-over');
+                });
+                
+                const dropZone = getDropZoneAt(touch.clientX, touch.clientY);
+                
+                if (dropZone) {
+                    if (dropZone.id === 'drop1') {
+                        handleDrop(fruit.id, 1, div);
+                    } else if (dropZone.id === 'drop2') {
+                        handleDrop(fruit.id, 2, div);
+                    }
+                }
+            });
+            
+            div.addEventListener('touchcancel', (e) => {
+                if (clone) {
+                    clone.remove();
+                    clone = null;
+                }
+                div.style.opacity = '1';
+                isDragging = false;
+                document.querySelectorAll('.drop-zone').forEach(dz => {
+                    dz.classList.remove('drag-over');
+                });
+            });
+            
+            fruitsArea.appendChild(div);
+        });
+        
+        document.getElementById('instruction').textContent = '🎧 Press the speaker 🔊 to hear the fruit name!';
+        roundActive = true;
+    }, 2200);
+}
+
+function setupSpeakers() {
+    document.getElementById('speaker1').onclick = () => playWagon(1);
+    document.getElementById('speaker2').onclick = () => playWagon(2);
+}
+
+function playWagon(wagonNum) {
+    if (!roundActive) return;
+    const round = rounds[currentRound];
+    const fruit = wagonNum === 1 ? round.wagon1 : round.wagon2;
+    
+    const speaker = document.getElementById('speaker' + wagonNum);
+    speaker.classList.add('playing');
+    setTimeout(() => speaker.classList.remove('playing'), 500);
+    
+    speak(fruit.name);
+    showWord(fruit.name);
+}
+
+function setupDropZones() {
+    ['drop1', 'drop2'].forEach((id, idx) => {
+        const zone = document.getElementById(id);
+        zone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            zone.classList.add('drag-over');
+        });
+        zone.addEventListener('dragleave', () => {
+            zone.classList.remove('drag-over');
+        });
+        zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            zone.classList.remove('drag-over');
+            const fruitId = parseInt(e.dataTransfer.getData('text/plain'));
+            handleDrop(fruitId, idx + 1);
+        });
+    });
+}
+
+function handleDrop(fruitId, wagonNum) {
+    if (!roundActive) return;
+    
+    const round = rounds[currentRound];
+    const correctFruit = wagonNum === 1 ? round.wagon1 : round.wagon2;
+    const droppedFruit = vocabulary.find(f => f.id === fruitId);
+    const fruitEl = document.querySelector(`.fruit[data-id="${fruitId}"]`);
+    const dropZone = document.getElementById('drop' + wagonNum);
+    const alreadyPlaced = wagonNum === 1 ? placedInWagon1 : placedInWagon2;
+    
+    if (alreadyPlaced) return;
+    if (!fruitEl) return;
+    
+    if (droppedFruit.id === correctFruit.id) {
+        fruitEl.classList.add('placed');
+        
+        if (droppedFruit.useImage) {
+            const img = document.createElement('img');
+            img.src = droppedFruit.image;
+            img.alt = droppedFruit.name;
+            img.style.width = '60px';
+            img.style.height = '60px';
+            img.style.objectFit = 'contain';
+            dropZone.innerHTML = '';
+            dropZone.appendChild(img);
+        } else {
+            dropZone.innerHTML = droppedFruit.emoji;
+        }
+        
+        dropZone.classList.add('filled');
+        
+        if (wagonNum === 1) placedInWagon1 = droppedFruit;
+        else placedInWagon2 = droppedFruit;
+        
+        speak('Correct! ' + droppedFruit.name);
+        
+        if (placedInWagon1 && placedInWagon2) {
+            roundActive = false;
+            setTimeout(() => {
+                setTrafficLight('green');
+                document.getElementById('instruction').textContent = '🟢 Train is leaving!';
+                const train = document.getElementById('train');
+                train.classList.remove('arrived');
+                train.classList.add('leaving');
+                
+                setTimeout(() => {
+                    currentRound++;
+                    loadRound();
+                }, 2600);
+            }, 800);
+        }
+    } else {
+        mistakes.push(droppedFruit);
+        fruitEl.classList.add('returning');
+        speak('Try again!');
+        setTimeout(() => {
+            if (fruitEl) fruitEl.classList.remove('returning');
+        }, 600);
+    }
+}
+
+function showFinalScreen() {
+    setTrafficLight('green');
+    speak("Congratulations! Great job! You brought all the fruits to the market. Mission accomplished!");
+    
+    const reviewBox = document.getElementById('review-box');
+    if (mistakes.length === 0) {
+        reviewBox.innerHTML = '<div class="no-mistakes">🌟 Perfect! No mistakes! 🌟</div>';
+    } else {
+        const uniqueMistakes = [];
+        const seen = new Set();
+        mistakes.forEach(m => {
+            if (!seen.has(m.id)) {
+                seen.add(m.id);
+                uniqueMistakes.push(m);
+            }
+        });
+        
+        let html = '<h3>📚 Let\'s Review!</h3>';
+        uniqueMistakes.forEach(fruit => {
+            let displayContent = fruit.useImage ? 
+                `<img src="${fruit.image}" alt="${fruit.name}">` : 
+                `<span class="emoji">${fruit.emoji}</span>`;
+            
+            html += `
+                <div class="review-item">
+                    ${displayContent}
+                    <strong>${fruit.name}</strong>
+                    <button class="play-btn" onclick="speak('${fruit.name}')">🔊 Listen</button>
+                </div>
+            `;
+        });
+        reviewBox.innerHTML = html;
+    }
+    
+    for (let i = 0; i < 60; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.background = ['#FFD700', '#FF6347', '#32CD32', '#1E90FF', '#FF69B4'][Math.floor(Math.random() * 5)];
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+        document.body.appendChild(confetti);
+    }
+    
+    setTimeout(() => {
+        document.getElementById('final-screen').classList.add('show');
+    }, 500);
+}
+
+// Initialize
+setupSpeakers();
+setupDropZones();
+</script>
+
+</body>
+</html>

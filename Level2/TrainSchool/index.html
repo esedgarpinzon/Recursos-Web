@@ -20,6 +20,7 @@
         position: relative;
         overflow: hidden;
         background: linear-gradient(to bottom, #87CEEB 0%, #B0E0E6 50%, #90EE90 50%, #228B22 100%);
+        display: none;
     }
     
     /* Welcome Screen */
@@ -218,8 +219,28 @@
         background: #5568d3;
         transform: translateX(-50%) scale(1.05);
     }
+
+    .game-back-btn {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: rgba(255,255,255,0.95);
+        color: #333;
+        border: 3px solid #FFD700;
+        padding: 8px 18px;
+        font-size: 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        z-index: 50;
+        transition: transform 0.2s;
+    }
+    .game-back-btn:hover {
+        transform: scale(1.05);
+        background: #FFF8DC;
+    }
     
-    /* Sun */
     .sun {
         position: absolute;
         top: 250px;
@@ -236,7 +257,6 @@
         50% { box-shadow: 0 0 60px #FFA500; }
     }
     
-    /* Clouds */
     .cloud {
         position: absolute;
         background: white;
@@ -261,7 +281,6 @@
         to { transform: translateX(120vw); }
     }
     
-    /* Tree */
     .tree {
         position: absolute;
         bottom: 49%;
@@ -270,7 +289,6 @@
         z-index: 2;
     }
     
-    /* Train station */
     .station {
         position: absolute;
         bottom: 50%;
@@ -305,7 +323,6 @@
         border-radius: 5px;
     }
     
-    /* Farmer */
     .farmer {
         position: absolute;
         bottom: 50%;
@@ -320,7 +337,6 @@
         50% { transform: rotate(-5deg); }
     }
     
-    /* Traffic light */
     .traffic-light {
         position: absolute;
         bottom: 28%;
@@ -351,7 +367,6 @@
         background: #333;
     }
     
-    /* Train track */
     .track {
         position: absolute;
         bottom: 19%;
@@ -380,7 +395,6 @@
         background: #666;
     }
     
-    /* Train */
     .train {
         position: absolute;
         bottom: 20%;
@@ -516,7 +530,6 @@
         font-size: 50px;
     }
     
-    /* Fruits area */
     .fruits-area {
         position: absolute;
         bottom: 5%;
@@ -560,7 +573,6 @@
         pointer-events: none !important;
     }
     
-    /* Word popup */
     .word-popup {
         position: absolute;
         top: 35%;
@@ -585,7 +597,6 @@
         100% { transform: translateX(-50%) scale(1); }
     }
     
-    /* UI */
     .ui-top {
         position: absolute;
         top: 15px;
@@ -617,7 +628,6 @@
         white-space: nowrap;
     }
     
-    /* Final screen */
     .final-screen {
         position: absolute;
         top: 0;
@@ -714,8 +724,22 @@
         transition: transform 0.2s;
     }
     .restart-btn:hover { transform: scale(1.05); background: #228B22; }
+
+    .menu-btn-final {
+        background: #4169E1;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        font-size: 18px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        margin-top: 10px;
+        transition: transform 0.2s;
+    }
+    .menu-btn-final:hover { transform: scale(1.05); background: #1E90FF; }
     
-    /* Confetti */
     .confetti {
         position: absolute;
         width: 10px;
@@ -728,15 +752,11 @@
         to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
 
-    /* Clones de frutas durante arrastre */
     .fruit-clone {
         pointer-events: none !important;
         z-index: 9999 !important;
     }
 
-    /* ==========================================
-       CONFIGURACIÓN UNIVERSAL (PC + MÓVIL)
-       ========================================== */
     .game-container, .fruit, .speaker, .drop-zone {
         touch-action: none;
         -webkit-touch-callout: none;
@@ -745,12 +765,9 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    /* ==========================================
-       RESPONSIVE - AJUSTES PARA MÓVIL
-       ========================================== */
     @media (max-width: 768px), (orientation: portrait) {
         .welcome-title {
-            font-size: 36px;
+            font-size: 32px;
         }
         .welcome-subtitle {
             font-size: 18px;
@@ -823,6 +840,10 @@
             text-align: center;
             white-space: normal;
         }
+        .game-back-btn {
+            font-size: 13px;
+            padding: 6px 12px;
+        }
     }
 </style>
 </head>
@@ -852,33 +873,28 @@
 </div>
 
 <div class="game-container" id="game-container">
-    <!-- Sky elements -->
+    <button class="game-back-btn" onclick="confirmBackToMenu()">← Menu</button>
+    
     <div class="sun"></div>
     <div class="cloud cloud1"></div>
     <div class="cloud cloud2"></div>
     
-    <!-- Tree -->
     <div class="tree">🌳</div>
     
-    <!-- Station -->
     <div class="station">
         <div class="station-roof"></div>
     </div>
     
-    <!-- Farmer -->
     <div class="farmer">👨‍🌾</div>
     
-    <!-- Traffic light -->
     <div class="traffic-light">
         <div class="light" id="red-light"></div>
         <div class="light" id="green-light"></div>
         <div class="light-pole"></div>
     </div>
     
-    <!-- Track -->
     <div class="track"></div>
     
-    <!-- Train -->
     <div class="train" id="train">
         <div class="locomotive">
             <div class="locomotive-window"></div>
@@ -899,13 +915,10 @@
         </div>
     </div>
     
-    <!-- Fruits area -->
     <div class="fruits-area" id="fruits-area"></div>
     
-    <!-- Word popup -->
     <div class="word-popup" id="word-popup"></div>
     
-    <!-- UI -->
     <div class="ui-top">🚂 Round: <span id="round-num">1</span> / 5</div>
     <div class="instruction" id="instruction">🎧 Listen to the fruit, then drag it to the wagon!</div>
 </div>
@@ -915,11 +928,12 @@
     <div class="money-sticker">💰</div>
     <div class="congrats-text" id="congrats-text">
         🎉 Congratulations! Great job! 🎉<br>
-        You brought all the fruits to the market!<br>
+        You brought all the words to their destiny!<br>
         ⭐ Mission Accomplished! ⭐
     </div>
     <div class="review-box" id="review-box"></div>
-    <button class="restart-btn" onclick="backToWelcome()">🔄 Play Again!</button>
+    <button class="restart-btn" onclick="restartGame()">🔄 Play Again!</button>
+    <button class="menu-btn-final" onclick="backToWelcome()">🏠 Back to Menu</button>
 </div>
 
 <script>
@@ -949,7 +963,6 @@ let placedInWagon1 = null;
 let placedInWagon2 = null;
 let roundActive = false;
 
-// Navigation functions
 function showReviewScreen() {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('review-screen').classList.add('show');
@@ -957,20 +970,88 @@ function showReviewScreen() {
 }
 
 function backToWelcome() {
+    window.speechSynthesis.cancel();
+    
     document.getElementById('welcome-screen').style.display = 'flex';
     document.getElementById('review-screen').classList.remove('show');
-    document.getElementById('final-screen').classList.remove('show');
+    
+    // ✅ CORREGIDO: No usar style.display = 'none' inline
+    // Solo quitar la clase .show y dejar que el CSS maneje el display
+    const finalScreen = document.getElementById('final-screen');
+    finalScreen.classList.remove('show');
+    finalScreen.style.display = ''; // ← Quitar el inline para que el CSS funcione
+    
     document.getElementById('game-container').style.display = 'none';
+    
+    document.querySelectorAll('.confetti').forEach(c => c.remove());
+    
+    resetGameState();
+}
+
+function resetGameState() {
+    currentRound = 0;
+    mistakes = [];
+    placedInWagon1 = null;
+    placedInWagon2 = null;
+    roundActive = false;
+    rounds = [];
+    
+    document.querySelectorAll('.fruit-clone').forEach(c => c.remove());
+    
+    const train = document.getElementById('train');
+    if (train) {
+        train.classList.remove('arrived', 'leaving');
+        train.style.transition = 'none';
+        train.style.left = '-600px';
+        void train.offsetWidth;
+        train.style.transition = '';
+    }
+    
+    const drop1 = document.getElementById('drop1');
+    const drop2 = document.getElementById('drop2');
+    if (drop1) {
+        drop1.innerHTML = 'DROP';
+        drop1.classList.remove('filled');
+    }
+    if (drop2) {
+        drop2.innerHTML = 'DROP';
+        drop2.classList.remove('filled');
+    }
+    
+    const fruitsArea = document.getElementById('fruits-area');
+    if (fruitsArea) fruitsArea.innerHTML = '';
+    
+    setTrafficLight('red');
+}
+
+function restartGame() {
+    const finalScreen = document.getElementById('final-screen');
+    finalScreen.classList.remove('show');
+    finalScreen.style.display = ''; // ← Quitar el inline
+    
+    document.querySelectorAll('.confetti').forEach(c => c.remove());
+    
+    resetGameState();
+    
+    generateRounds();
+    loadRound();
+}
+
+function confirmBackToMenu() {
+    if (confirm('Are you sure you want to go back to the menu? Your progress will be lost.')) {
+        backToWelcome();
+    }
 }
 
 function startGame() {
     document.getElementById('welcome-screen').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
+    
+    resetGameState();
     generateRounds();
     loadRound();
 }
 
-// Vocabulary Review Cards
 function loadVocabularyCards() {
     const grid = document.getElementById('vocab-grid');
     grid.innerHTML = '';
@@ -1002,7 +1083,6 @@ function loadVocabularyCards() {
         inner.appendChild(back);
         card.appendChild(inner);
         
-        // Click/Tap to flip
         card.addEventListener('click', () => flipCard(card, item));
         card.addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -1014,31 +1094,23 @@ function loadVocabularyCards() {
 }
 
 function flipCard(card, item) {
-    // Flip all other cards back
     document.querySelectorAll('.vocab-card').forEach(c => {
         if (c !== card) c.classList.remove('flipped');
     });
     
-    // Toggle this card
     card.classList.toggle('flipped');
     
-    // Speak the word when flipped to back
     if (card.classList.contains('flipped')) {
         setTimeout(() => {
             speak(item.name);
         }, 300);
         
-        // Auto flip back after 2 seconds
         setTimeout(() => {
             card.classList.remove('flipped');
         }, 2000);
     }
 }
 
-// ==========================================
-// FUNCIÓN CLAVE: DETECTAR DÓNDE SE SOLTÓ LA FRUTA
-// Usa elementFromPoint que funciona perfecto con escalas
-// ==========================================
 function getDropZoneAt(x, y) {
     const element = document.elementFromPoint(x, y);
     if (!element) return null;
@@ -1109,13 +1181,11 @@ function loadRound() {
     placedInWagon1 = null;
     placedInWagon2 = null;
     
-    // IMPORTANTE: Limpiar cualquier clone residual de rondas anteriores
     document.querySelectorAll('.fruit-clone').forEach(c => c.remove());
     
     document.getElementById('round-num').textContent = currentRound + 1;
     document.getElementById('instruction').textContent = '🚂 The train is arriving...';
     
-    // Reset drop zones
     const drop1 = document.getElementById('drop1');
     const drop2 = document.getElementById('drop2');
     drop1.innerHTML = 'DROP';
@@ -1123,10 +1193,8 @@ function loadRound() {
     drop1.classList.remove('filled');
     drop2.classList.remove('filled');
     
-    // Clear fruits area
     document.getElementById('fruits-area').innerHTML = '';
     
-    // Train arrives
     const train = document.getElementById('train');
     train.style.left = '';
     train.style.transition = '';
@@ -1140,7 +1208,6 @@ function loadRound() {
         train.classList.add('arrived');
     }, 100);
     
-    // Load fruits
     setTimeout(() => {
         const round = rounds[currentRound];
         
@@ -1160,7 +1227,6 @@ function loadRound() {
                 div.textContent = fruit.emoji;
             }
             
-            // === MOUSE (PC) ===
             div.addEventListener('dragstart', (e) => {
                 if (!roundActive) { e.preventDefault(); return; }
                 e.dataTransfer.setData('text/plain', fruit.id);
@@ -1170,7 +1236,6 @@ function loadRound() {
                 div.classList.remove('dragging');
             });
             
-            // === TOUCH (MÓVIL) - VERSIÓN CORREGIDA ===
             let touchOffsetX = 0, touchOffsetY = 0;
             let clone = null;
             let isDragging = false;
@@ -1260,7 +1325,7 @@ function loadRound() {
             fruitsArea.appendChild(div);
         });
         
-        document.getElementById('instruction').textContent = '🎧 Press the speaker 🔊 to hear the fruit name!';
+        document.getElementById('instruction').textContent = '🎧 Press the speaker 🔊 to hear the word!';
         roundActive = true;
     }, 2200);
 }
@@ -1363,9 +1428,10 @@ function handleDrop(fruitId, wagonNum) {
     }
 }
 
+// ✅ FUNCIÓN CORREGIDA: showFinalScreen ahora limpia el estilo inline antes de mostrar
 function showFinalScreen() {
     setTrafficLight('green');
-    speak("Congratulations! Great job! You brought all the fruits to the market. Mission accomplished!");
+    speak("Congratulations! Great job! You brought all the words to their destiny. Mission accomplished!");
     
     const reviewBox = document.getElementById('review-box');
     if (mistakes.length === 0) {
@@ -1380,7 +1446,7 @@ function showFinalScreen() {
             }
         });
         
-        let html = '<h3>📚 Let\'s Review!</h3>';
+        let html = '<h3>📚 Let\'s Review These Words!</h3>';
         uniqueMistakes.forEach(fruit => {
             let displayContent = fruit.useImage ? 
                 `<img src="${fruit.image}" alt="${fruit.name}">` : 
@@ -1407,8 +1473,12 @@ function showFinalScreen() {
         document.body.appendChild(confetti);
     }
     
+    // ✅ CLAVE: Limpiar el estilo inline ANTES de agregar la clase .show
+    const finalScreen = document.getElementById('final-screen');
+    finalScreen.style.display = ''; // ← Esto permite que el CSS .show funcione
+    
     setTimeout(() => {
-        document.getElementById('final-screen').classList.add('show');
+        finalScreen.classList.add('show');
     }, 500);
 }
 

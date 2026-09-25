@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Panel de Sonidos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Fondo animado sutil */
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #1e1b4b);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* Para asegurar que los iframes se vean limpios */
+        iframe {
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex flex-col antialiased selection:bg-fuchsia-500 selection:text-white">
+
+    <header class="w-full border-b border-white/10 bg-black/20 backdrop-blur-md py-6 px-4 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex items-center justify-center gap-3">
+            <div class="p-2 bg-gradient-to-tr from-fuchsia-600 to-purple-600 rounded-xl shadow-lg shadow-purple-500/30">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                </svg>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-fuchsia-300 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
+                Mi Panel de Sonidos
+            </h1>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl w-full mx-auto p-6 md:p-8">
+        <!-- Contenedor Grid responsivo -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+
+            <!-- 1. Inicio de presentacion -->
+            <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-between shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-purple-500/20 group">
+                <h3 class="text-sm font-semibold text-center mb-4 text-purple-200 group-hover:text-white transition-colors h-10 flex items-center">
+                    Inicio de presentacion
+                </h3>
+                <iframe width="110" height="170" src="https://www.myinstants.com/instant/we-will-be-right-back-55034/embed/" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- 2. puck -->
+            <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-between shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-cyan-500/20 group">
+                <h3 class="text-sm font-semibold text-center mb-4 text-cyan-200 group-hover:text-white transition-colors h-10 flex items-center">
+                    puck
+                </h3>
+                <iframe width="110" height="170" src="https://www.myinstants.com/instant/transition-t-g-12879/embed/" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- 3. transition -->
+            <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-between shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-emerald-500/20 group">
+                <h3 class="text-sm font-semibold text-center mb-4 text-emerald-200 group-hover:text-white transition-colors h-10 flex items-center">
+                    transition
+                </h3>
+                <iframe width="110" height="170" src="https://www.myinstants.com/instant/transition-sfx-12588/embed/" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- 4. transition 2 -->
+            <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-between shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-amber-500/20 group">
+                <h3 class="text-sm font-semibold text-center mb-4 text-amber-200 group-hover:text-white transition-colors h-10 flex items-center">
+                    transition 2
+                </h3>
+                <iframe width="110" height="170" src="https://www.myinstants.com/instant/transition-sfx-1-62531/embed/" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- 5. transition noticias -->
+            <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-between shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-rose-500/20 group">
+                <h3 class="text-sm font-semibold text-center mb-4 text-rose-200 group-hover:text-white transition-colors h-10 flex items-center">
+                    transition noticias
+                </h3>
+                <iframe width="110" height="170" src="https://www.myinstants.com/instant/transition-2-48132/embed/" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- 6. transition noticias 2 -->
+            <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-between shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-blue-500/20 group">
+                <h3 class="text-sm font-semibold text-center mb-4 text-blue-200 group-hover:text-white transition-colors h-10 flex items-center">
+                    transition noticias 2
+                </h3>
+                <iframe width="110" height="170" src="https://www.myinstants.com/instant/transition-3-80161/embed/" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- 7. whosh -->
+            <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-between shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-pink-500/20 group">
+                <h3 class="text-sm font-semibold text-center mb-4 text-pink-200 group-hover:text-white transition-colors h-10 flex items-center">
+                    whosh
+                </h3>
+                <iframe width="110" height="170" src="https://www.myinstants.com/instant/transition-whoosh-87155/embed/" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- 8. hash -->
+            <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-between shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-teal-500/20 group">
+                <h3 class="text-sm font-semibold text-center mb-4 text-teal-200 group-hover:text-white transition-colors h-10 flex items-center">
+                    hash
+                </h3>
+                <iframe width="110" height="170" src="https://www.myinstants.com/instant/transitionswoosh-107/embed/" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <!-- 9. finally -->
+            <div class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-5 flex flex-col items-center justify-between shadow-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lime-500/20 group">
+                <h3 class="text-sm font-semibold text-center mb-4 text-lime-200 group-hover:text-white transition-colors h-10 flex items-center">
+                    finally
+                </h3>
+                <iframe width="110" height="170" src="https://www.myinstants.com/instant/south-park-transition-74314/embed/" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="mt-auto py-6 text-center text-sm text-slate-400">
+        <p>Botones provistos por MyInstants</p>
+    </footer>
+
+</body>
+</html>

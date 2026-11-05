@@ -1,1 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Writing Portfolio | Edgar Pinzón</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b',
+                        },
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        .tab-btn.active {
+            background-color: #059669;
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
 
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 bg-navy-900/95 backdrop-blur-md text-white border-b border-slate-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-600/30">
+                        EP
+                    </div>
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                            Edgar Pinzón
+                            <span class="bg-brand-500/20 text-brand-500 text-xs px-2.5 py-0.5 rounded-full font-semibold border border-brand-500/30">PEM en Inglés</span>
+                        </h1>
+                        <p class="text-xs sm:text-sm text-slate-400">Universidad de San Carlos de Guatemala — Sección de Idiomas</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#about" class="text-slate-300 hover:text-brand-500 transition-colors">About Me</a>
+                    <a href="#essays" class="text-slate-300 hover:text-brand-500 transition-colors">The 5 Essays</a>
+                    <a href="#reflection" class="text-slate-300 hover:text-brand-500 transition-colors">Final Reflection</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero / Header Banner Section -->
+    <section class="bg-gradient-to-b from-navy-900 via-navy-800 to-slate-900 text-white py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10 text-center sm:text-left">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/80 text-brand-500 text-xs font-semibold uppercase tracking-wider mb-6">
+                <i class="fa-solid fa-book-open"></i> Composition II Portfolio
+            </div>
+            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+                Digital Writing Portfolio:<br class="hidden sm:inline"/> Five Essay Types, My Writing Journey
+            </h2>
+            <p class="text-slate-300 text-base sm:text-lg max-w-3xl leading-relaxed mb-8">
+                Demonstrating academic writer growth, essay structure mastery, and continuous reflective refinement in pursuit of teaching excellence.
+            </p>
+
+            <!-- Metadata Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl pt-4 border-t border-slate-800">
+                <div class="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700/50">
+                    <span class="text-xs text-slate-400 block font-medium">Course</span>
+                    <span class="text-sm font-semibold text-white">Composition II</span>
+                </div>
+                <div class="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700/50">
+                    <span class="text-xs text-slate-400 block font-medium">Instructor</span>
+                    <span class="text-sm font-semibold text-white">Licda. Diana Ordoñez</span>
+                </div>
+                <div class="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700/50">
+                    <span class="text-xs text-slate-400 block font-medium">Institution</span>
+                    <span class="text-sm font-semibold text-white">USAC Idiomas</span>
+                </div>
+                <div class="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700/50">
+                    <span class="text-xs text-slate-400 block font-medium">Term</span>
+                    <span class="text-sm font-semibold text-white">Segundo Semestre</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+            
+            <!-- Profile Card -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                    <div class="w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Edgar Pinzón</h3>
+                    <p class="text-brand-600 font-semibold text-sm mb-4">English Instructor in constant improvement</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        language learner of other languages. Student of <strong>PEM en Inglés</strong> at USAC, Sección de Idiomas. Deeply passionate about teaching English and committed to personal and pedagogical excellence.
+                    </p>
+                </div>
+                <div class="mt-6 pt-6 border-t border-slate-100 space-y-2">
+                    <div class="flex items-center gap-3 text-xs text-slate-600">
+                        <i class="fa-solid fa-check text-brand-500"></i> Continuous Learner
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-slate-600">
+                        <i class="fa-solid fa-check text-brand-500"></i> Driven by Self-Improvement
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Goals -->
+            <div class="lg:col-span-2 bg-gradient-to-br from-white to-slate-50 p-8 rounded-2xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div>
+                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">Personal Writing Goals</h3>
+                    <p class="text-slate-600 text-base leading-relaxed mb-6">
+                        "I want to boost my writing skills by creating and editing essays. That way, I will help my students build their confidence when writing during their learning process."
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-xl border border-slate-200/60 shadow-xs">
+                            <div class="text-brand-600 text-lg font-bold mb-1 flex items-center gap-2">
+                                <i class="fa-solid fa-feather-pointed"></i> Mastery of Structure
+                            </div>
+                            <p class="text-xs text-slate-500">Understanding definitions, rhetorical devices, and features of each essay type.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl border border-slate-200/60 shadow-xs">
+                            <div class="text-brand-600 text-lg font-bold mb-1 flex items-center gap-2">
+                                <i class="fa-solid fa-chalkboard-user"></i> Pedagogical Empowerment
+                            </div>
+                            <p class="text-xs text-slate-500">Building authentic writing confidence to guide future students effectively.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-500">
+                    <span>Composition II Portfolio</span>
+                    <span class="font-medium text-slate-700">5 Distinct Essays Analyzed</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Interactive Essay Portfolio Section -->
+    <section id="essays" class="py-16 bg-slate-100/70 border-y border-slate-200/80 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-brand-600 text-xs font-extrabold uppercase tracking-widest block mb-2">Core Portfolio Content</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">My Five Academic Essays</h2>
+                <p class="text-slate-600 mt-3 text-base">Select an essay below to explore its structural definitions, key characteristics, visual context, embedded documents, and personal reflection.</p>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="flex items-center justify-start lg:justify-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
+                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn active shrink-0 px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 bg-white text-slate-700 hover:bg-slate-200 shadow-xs">
+                    <i class="fa-solid fa-book"></i> 1. Narrative
+                </button>
+                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn shrink-0 px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 bg-white text-slate-700 hover:bg-slate-200 shadow-xs">
+                    <i class="fa-solid fa-image"></i> 2. Descriptive
+                </button>
+                <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn shrink-0 px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 bg-white text-slate-700 hover:bg-slate-200 shadow-xs">
+                    <i class="fa-solid fa-gavel"></i> 3. Persuasive
+                </button>
+                <button onclick="switchTab(4)" id="tab-btn-4" class="tab-btn shrink-0 px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 bg-white text-slate-700 hover:bg-slate-200 shadow-xs">
+                    <i class="fa-solid fa-diagram-project"></i> 4. Cause & Effect
+                </button>
+                <button onclick="switchTab(5)" id="tab-btn-5" class="tab-btn shrink-0 px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 bg-white text-slate-700 hover:bg-slate-200 shadow-xs">
+                    <i class="fa-solid fa-code-compare"></i> 5. Compare & Contrast
+                </button>
+            </div>
+
+            <!-- TAB 1: NARRATIVE -->
+            <div id="tab-content-1" class="tab-content bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80" alt="Narrative Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-indigo-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 01 — Narrative
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "The Moment I Realized the Importance of English"
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Definition -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-brand-600"></i> Definition
+                        </h4>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            The narrative essay tells a story with a clear point of view and a chronological sequence of events, where the writer intends to share specific meaningful experiences or actions.
+                        </p>
+                    </div>
+
+                    <!-- Main Characteristics -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-tags text-brand-600"></i> Main Characteristics
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Personal Point of View</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Characters & Setting</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Sensory Details</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Chronological Sequence</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Embedded Document Viewer -->
+                <div class="mb-8">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-window-maximize text-brand-600"></i> Embedded Document Viewer
+                        </h4>
+                        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
+                            <button onclick="switchDocViewer(1, 'final')" id="doc-subtab-1-final" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-slate-900 shadow-xs transition-all">
+                                Final Version
+                            </button>
+                            <button onclick="switchDocViewer(1, 'brainstorm')" id="doc-subtab-1-brainstorm" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                                Brainstorming
+                            </button>
+                            <button onclick="switchDocViewer(1, 'draft')" id="doc-subtab-1-draft" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                                First Draft
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
+                        <div id="iframe-container-1-final" class="w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/1PZayzZtwYOn3jZFXeFpSmZ7KDLn3l8cdT9YK5Bcwi7A/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                        <div id="iframe-container-1-brainstorm" class="hidden w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/1qsvGhd21JQ7kuPjjC4D7fNpnfsHydhal3Wb3-Xn1Gww/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                        <div id="iframe-container-1-draft" class="hidden w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/1tkcJ7TLEtPy7TowM23MzIRL2k0It9uoTf8teQfguFqI/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Reflection Box -->
+                <div class="bg-gradient-to-r from-emerald-500/10 via-brand-500/5 to-transparent p-6 rounded-2xl border-l-4 border-brand-600">
+                    <h4 class="text-xs font-extrabold uppercase text-brand-700 tracking-wider mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-quote-left"></i> Personal Reflection
+                    </h4>
+                    <p class="text-slate-800 text-sm leading-relaxed italic">
+                        "I first faced difficulties writing this first essay, especially because usually we don’t focus on academic writing; we just learn the language and try to develop good fluency to pass interviews, convince recruiters, or communicate with others. However, through the process of writing this essay, I started to gain confidence when writing more academically."
+                    </p>
+                </div>
+            </div>
+
+            <!-- TAB 2: DESCRIPTIVE -->
+            <div id="tab-content-2" class="tab-content hidden bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80" alt="Descriptive Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-amber-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 02 — Descriptive
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "A Person Whose Presence I Remember Clearly"
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Definition -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-brand-600"></i> Definition
+                        </h4>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            Descriptive essays create vivid impressions of people, places, and events. It describes everything as if the reader were really feeling and experiencing what is being told.
+                        </p>
+                    </div>
+
+                    <!-- Main Characteristics -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-tags text-brand-600"></i> Main Characteristics
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Use of Five Senses</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Show, Don't Tell</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Precise Language</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Mental "Camera" for Reader</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Embedded Document Viewer -->
+                <div class="mb-8">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-window-maximize text-brand-600"></i> Embedded Document Viewer
+                        </h4>
+                        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
+                            <button onclick="switchDocViewer(2, 'final')" id="doc-subtab-2-final" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-slate-900 shadow-xs transition-all">
+                                Final Essay
+                            </button>
+                            <button onclick="switchDocViewer(2, 'evidence')" id="doc-subtab-2-evidence" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                                Writing Process Evidence
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
+                        <div id="iframe-container-2-final" class="w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/18fj6AkDxKkHmWYMjI3ibsBh6YH5M4sDsIiFY4JXMCK0/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                        <div id="iframe-container-2-evidence" class="hidden w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/1UTdjLk1aGKCgbMH7ZfAuWgxgdHChJ_gzfQCC7NiNRoM/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Reflection Box -->
+                <div class="bg-gradient-to-r from-emerald-500/10 via-brand-500/5 to-transparent p-6 rounded-2xl border-l-4 border-brand-600">
+                    <h4 class="text-xs font-extrabold uppercase text-brand-700 tracking-wider mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-quote-left"></i> Personal Reflection
+                    </h4>
+                    <p class="text-slate-800 text-sm leading-relaxed italic">
+                        "I basically focused on learning how to describe a person, things, places, and events. I learned that when we write, we need to understand what type of essay we are focusing on."
+                    </p>
+                </div>
+            </div>
+
+            <!-- TAB 3: PERSUASIVE -->
+            <div id="tab-content-3" class="tab-content hidden bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Persuasive Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-rose-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 03 — Persuasive / Argumentative
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "Why Online Lessons Can Be as Good as In-Person Lessons"
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Definition -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-brand-600"></i> Definition
+                        </h4>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            Main goal is to persuade the reader to believe, convince them of a specific viewpoint, and prompt them to take action into a particular point of view.
+                        </p>
+                    </div>
+
+                    <!-- Main Characteristics -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-tags text-brand-600"></i> Main Rhetorical Appeals
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-50 border border-blue-200 text-blue-700 text-xs px-3 py-1.5 rounded-full font-bold">Logos (Evidence & Facts)</span>
+                            <span class="bg-rose-50 border border-rose-200 text-rose-700 text-xs px-3 py-1.5 rounded-full font-bold">Pathos (Emotional Appeal)</span>
+                            <span class="bg-purple-50 border border-purple-200 text-purple-700 text-xs px-3 py-1.5 rounded-full font-bold">Ethos (Credibility & Authority)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Embedded Document Viewer -->
+                <div class="mb-8">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-window-maximize text-brand-600"></i> Embedded Document Viewer
+                        </h4>
+                        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
+                            <button onclick="switchDocViewer(3, 'final')" id="doc-subtab-3-final" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-slate-900 shadow-xs transition-all">
+                                Final Essay
+                            </button>
+                            <button onclick="switchDocViewer(3, 'evidence')" id="doc-subtab-3-evidence" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                                Process Evidence (Drive)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
+                        <div id="iframe-container-3-final" class="w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/1RzRI0l47VVgUss_MRZOBxe-i5IrNIqd2cWwzlbTzgNI/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                        <div id="iframe-container-3-evidence" class="hidden w-full h-full">
+                            <iframe src="https://drive.google.com/file/d/1PDHt14HPtY-EvvEIGXwTM5bZhDkiOidu/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Reflection Box -->
+                <div class="bg-gradient-to-r from-emerald-500/10 via-brand-500/5 to-transparent p-6 rounded-2xl border-l-4 border-brand-600">
+                    <h4 class="text-xs font-extrabold uppercase text-brand-700 tracking-wider mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-quote-left"></i> Personal Reflection
+                    </h4>
+                    <p class="text-slate-800 text-sm leading-relaxed italic">
+                        "Through this practical exercise I learned to avoid some typos in my writing, I learned the importance of showing evidence to try to convince the readers."
+                    </p>
+                </div>
+            </div>
+
+            <!-- TAB 4: CAUSE & EFFECT -->
+            <div id="tab-content-4" class="tab-content hidden bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80" alt="Cause and Effect Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-teal-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 04 — Cause and Effect
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "You Don’t Need a Diploma to Get a Well-Paying Job"
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Definition -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-brand-600"></i> Definition
+                        </h4>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            The cause and effect essay describes why something happens and examines the consequences of those actions.
+                        </p>
+                    </div>
+
+                    <!-- Main Characteristics -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-tags text-brand-600"></i> Main Characteristics
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Focus on Causes</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Focus on Effects</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Direct Causal Links</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Embedded Document Viewer -->
+                <div class="mb-8">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-window-maximize text-brand-600"></i> Embedded Document Viewer
+                        </h4>
+                        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
+                            <button onclick="switchDocViewer(4, 'final')" id="doc-subtab-4-final" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-slate-900 shadow-xs transition-all">
+                                Final Essay
+                            </button>
+                            <button onclick="switchDocViewer(4, 'evidence')" id="doc-subtab-4-evidence" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                                Writing Process Evidence
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
+                        <div id="iframe-container-4-final" class="w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/1nu4Qv9Zw_ZVwgE50gjw0jixAGJ4YWBwlN0nZqvOB4xU/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                        <div id="iframe-container-4-evidence" class="hidden w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/1EBtYq3GYbFjTxasEJGEMlxsGlVbk3S8jpiUogw9ARC8/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Reflection Box -->
+                <div class="bg-gradient-to-r from-emerald-500/10 via-brand-500/5 to-transparent p-6 rounded-2xl border-l-4 border-brand-600">
+                    <h4 class="text-xs font-extrabold uppercase text-brand-700 tracking-wider mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-quote-left"></i> Personal Reflection
+                    </h4>
+                    <p class="text-slate-800 text-sm leading-relaxed italic">
+                        "When it comes to cause and effect essays, we need to understand that sometimes what we write will help someone else to understand the real version of life and world, as every action or belief we have may have consequences or effects on our real environment."
+                    </p>
+                </div>
+            </div>
+
+            <!-- TAB 5: COMPARE & CONTRAST -->
+            <div id="tab-content-5" class="tab-content hidden bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80" alt="Compare and Contrast Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-purple-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 05 — Compare and Contrast
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "Online Learning vs. Face-to-Face Learning"
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Definition -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-brand-600"></i> Definition
+                        </h4>
+                        <p class="text-slate-700 text-sm leading-relaxed">
+                            Shows the differences and similarities of each topic or point of view, helping the reader understand the relationship between each option.
+                        </p>
+                    </div>
+
+                    <!-- Main Characteristics -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-tags text-brand-600"></i> Main Characteristics
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Compares Two or More Topics</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Establishes Relationships</span>
+                            <span class="bg-white border border-slate-300/70 text-slate-700 text-xs px-3 py-1.5 rounded-full font-medium">Clarifies Distinct Contrasts</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Embedded Document Viewer -->
+                <div class="mb-8">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
+                        <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-window-maximize text-brand-600"></i> Embedded Document Viewer
+                        </h4>
+                        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
+                            <button onclick="switchDocViewer(5, 'final')" id="doc-subtab-5-final" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-slate-900 shadow-xs transition-all">
+                                Final Essay
+                            </button>
+                            <button onclick="switchDocViewer(5, 'evidence')" id="doc-subtab-5-evidence" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                                Writing Process Evidence
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
+                        <div id="iframe-container-5-final" class="w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/1yA2zgtIWT4vCH7ttOdbAttCF-l-8xrdoOJLDt60Ihmk/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                        <div id="iframe-container-5-evidence" class="hidden w-full h-full">
+                            <iframe src="https://docs.google.com/document/d/1_wGExPZ6CHRI11MVJzHuv8wLrttxzu-97npp49zEJbQ/preview" class="w-full h-[520px] border-0"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Reflection Box -->
+                <div class="bg-gradient-to-r from-emerald-500/10 via-brand-500/5 to-transparent p-6 rounded-2xl border-l-4 border-brand-600">
+                    <h4 class="text-xs font-extrabold uppercase text-brand-700 tracking-wider mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-quote-left"></i> Personal Reflection
+                    </h4>
+                    <p class="text-slate-800 text-sm leading-relaxed italic">
+                        "By comparing two opposite topics it becomes interesting since it forces the writer to see the pros and cons of each topic."
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Final Reflection Section -->
+    <section id="reflection" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-brand-600 text-xs font-extrabold uppercase tracking-widest block mb-2">Synthesis & Assessment</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Final Reflection & Self-Evaluation</h2>
+            <p class="text-slate-600 mt-2 text-base">Evaluating overall growth, linguistic refinement, and future pedagogical application.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Card 1: Self-Evaluation -->
+            <div class="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -z-0"></div>
+                <div class="relative z-10">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center text-xl mb-6 font-bold">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Self-Evaluation</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        No matter how good you believe you are, there is always room for improvement. Through the Composition II course, I was able to check my typos and learn from them. 
+                    </p>
+                    <div class="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-700 font-medium leading-relaxed">
+                        Writing is vital to express our feelings, describe events, make comparisons, convince readers, and most importantly, to improve as professionals through academic writing techniques.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Professional Growth -->
+            <div class="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -z-0"></div>
+                <div class="relative z-10">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-700 rounded-xl flex items-center justify-center text-xl mb-6 font-bold">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Professional Growth</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        I definitely grew professionally through this course. I learned new writing skills and faced the real complexities of academic writing.
+                    </p>
+                    <div class="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-700 font-medium leading-relaxed">
+                        This experience increased my level as a teacher, specifically equipping me to guide my future students to successfully prepare for standardized tests like the TOEFL.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-navy-950 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm text-slate-300 font-medium mb-2">Edgar Pinzón — Composition II Digital Writing Portfolio</p>
+            <p class="text-xs text-slate-500">Universidad de San Carlos de Guatemala | Sección de Idiomas — Segundo Semestre</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        function switchTab(tabIndex) {
+            for (let i = 1; i <= 5; i++) {
+                const content = document.getElementById(`tab-content-${i}`);
+                const btn = document.getElementById(`tab-btn-${i}`);
+                
+                if (content && btn) {
+                    content.classList.add('hidden');
+                    btn.classList.remove('active');
+                    btn.classList.add('bg-white', 'text-slate-700');
+                }
+            }
+
+            const activeContent = document.getElementById(`tab-content-${tabIndex}`);
+            const activeBtn = document.getElementById(`tab-btn-${tabIndex}`);
+
+            if (activeContent && activeBtn) {
+                activeContent.classList.remove('hidden');
+                activeBtn.classList.add('active');
+                activeBtn.classList.remove('bg-white', 'text-slate-700');
+            }
+        }
+
+        function switchDocViewer(essayIndex, viewType) {
+            const containers = document.querySelectorAll(`[id^="iframe-container-${essayIndex}-"]`);
+            containers.forEach(el => el.classList.add('hidden'));
+
+            const selectedContainer = document.getElementById(`iframe-container-${essayIndex}-${viewType}`);
+            if (selectedContainer) {
+                selectedContainer.classList.remove('hidden');
+            }
+
+            const subtabs = document.querySelectorAll(`[id^="doc-subtab-${essayIndex}-"]`);
+            subtabs.forEach(btn => {
+                btn.classList.remove('bg-white', 'text-slate-900', 'shadow-xs');
+                btn.classList.add('text-slate-600');
+            });
+
+            const activeSubtab = document.getElementById(`doc-subtab-${essayIndex}-${viewType}`);
+            if (activeSubtab) {
+                activeSubtab.classList.add('bg-white', 'text-slate-900', 'shadow-xs');
+                activeSubtab.classList.remove('text-slate-600');
+            }
+        }
+    </script>
+</body>
+</html>

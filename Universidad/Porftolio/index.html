@@ -46,7 +46,7 @@
         .tab-btn.active {
             background-color: #059669;
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
         }
     </style>
 </head>
@@ -79,13 +79,12 @@
 
     <!-- Hero / Header Banner Section -->
     <section class="bg-gradient-to-b from-navy-900 via-navy-800 to-slate-900 text-white py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <!-- Background Graphic Ornaments -->
         <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto relative z-10 text-center sm:text-left">
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-slate-700/80 text-brand-500 text-xs font-semibold uppercase tracking-wider mb-6">
-                <i class="fa-solid font-bold fa-book-open"></i> Composition II Portfolio
+                <i class="fa-solid fa-book-open"></i> Composition II Portfolio
             </div>
             <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
                 Digital Writing Portfolio:<br class="hidden sm:inline"/> Five Essay Types, My Writing Journey
@@ -127,9 +126,9 @@
                         <i class="fa-solid fa-user-graduate"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-slate-900 mb-2">Edgar Pinzón</h3>
-                    <p class="text-brand-600 font-semibold text-sm mb-4">Future English Instructor</p>
+                    <p class="text-brand-600 font-semibold text-sm mb-4">English Instructor in constant improvement</p>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        Student of <strong>PEM en Inglés</strong> at USAC, Sección de Idiomas. Deeply passionate about teaching English and committed to personal and pedagogical excellence.
+                        language learner of other languages. Student of <strong>PEM en Inglés</strong> at USAC, Sección de Idiomas. Deeply passionate about teaching English and committed to personal and pedagogical excellence.
                     </p>
                 </div>
                 <div class="mt-6 pt-6 border-t border-slate-100 space-y-2">
@@ -185,7 +184,7 @@
             <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="text-brand-600 text-xs font-extrabold uppercase tracking-widest block mb-2">Core Portfolio Content</span>
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">My Five Academic Essays</h2>
-                <p class="text-slate-600 mt-3 text-base">Select an essay below to explore its structural definitions, key characteristics, evidence links, and personal reflection.</p>
+                <p class="text-slate-600 mt-3 text-base">Select an essay below to explore its structural definitions, key characteristics, visual context, embedded documents, and personal reflection.</p>
             </div>
 
             <!-- Navigation Tabs -->
@@ -209,16 +208,20 @@
 
             <!-- TAB 1: NARRATIVE -->
             <div id="tab-content-1" class="tab-content bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                    <span class="bg-indigo-50 text-indigo-700 font-bold text-xs uppercase px-3 py-1.5 rounded-lg border border-indigo-100">
-                        Essay Type 01 — Narrative
-                    </span>
-                    <span class="text-slate-400 text-xs font-medium"><i class="fa-regular fa-clock"></i> Personal Experience Story</span>
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80" alt="Narrative Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-indigo-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 01 — Narrative
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "The Moment I Realized the Importance of English"
+                            </h3>
+                        </div>
+                    </div>
                 </div>
-
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6 leading-snug">
-                    "The Moment I Realized the Importance of English"
-                </h3>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <!-- Definition -->
@@ -245,13 +248,12 @@
                     </div>
                 </div>
 
-                <!-- Interactive Document Viewer & Sub-Tabs -->
+                <!-- Embedded Document Viewer -->
                 <div class="mb-8">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
                         <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
                             <i class="fa-solid fa-window-maximize text-brand-600"></i> Embedded Document Viewer
                         </h4>
-                        <!-- View Switcher -->
                         <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
                             <button onclick="switchDocViewer(1, 'final')" id="doc-subtab-1-final" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-slate-900 shadow-xs transition-all">
                                 Final Version
@@ -265,27 +267,16 @@
                         </div>
                     </div>
 
-                    <!-- Embedded IFRAMES -->
                     <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
-                        <!-- Final Version Frame -->
                         <div id="iframe-container-1-final" class="w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/1PZayzZtwYOn3jZFXeFpSmZ7KDLn3l8cdT9YK5Bcwi7A/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1PZayzZtwYOn3jZFXeFpSmZ7KDLn3l8cdT9YK5Bcwi7A/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
-                        <!-- Brainstorming Frame -->
                         <div id="iframe-container-1-brainstorm" class="hidden w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/1qsvGhd21JQ7kuPjjC4D7fNpnfsHydhal3Wb3-Xn1Gww/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1qsvGhd21JQ7kuPjjC4D7fNpnfsHydhal3Wb3-Xn1Gww/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
-                        <!-- First Draft Frame -->
                         <div id="iframe-container-1-draft" class="hidden w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/1tkcJ7TLEtPy7TowM23MzIRL2k0It9uoTf8teQfguFqI/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1tkcJ7TLEtPy7TowM23MzIRL2k0It9uoTf8teQfguFqI/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
-                    </div>
-
-                    <!-- Direct Backup Links -->
-                    <div class="mt-4 flex flex-wrap gap-3 justify-end text-xs">
-                        <a href="https://docs.google.com/document/d/1PZayzZtwYOn3jZFXeFpSmZ7KDLn3l8cdT9YK5Bcwi7A/edit?usp=drive_link" target="_blank" class="text-slate-600 hover:text-brand-600 font-medium inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg">
-                            <i class="fa-solid fa-arrow-up-right-from-square text-brand-600"></i> Open Final Doc in Google Docs
-                        </a>
                     </div>
                 </div>
 
@@ -302,16 +293,20 @@
 
             <!-- TAB 2: DESCRIPTIVE -->
             <div id="tab-content-2" class="tab-content hidden bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                    <span class="bg-amber-50 text-amber-700 font-bold text-xs uppercase px-3 py-1.5 rounded-lg border border-amber-100">
-                        Essay Type 02 — Descriptive
-                    </span>
-                    <span class="text-slate-400 text-xs font-medium"><i class="fa-regular fa-eye"></i> Vivid Imagery & Sensory Details</span>
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80" alt="Descriptive Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-amber-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 02 — Descriptive
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "A Person Whose Presence I Remember Clearly"
+                            </h3>
+                        </div>
+                    </div>
                 </div>
-
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6 leading-snug">
-                    "A Person Whose Presence I Remember Clearly"
-                </h3>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <!-- Definition -->
@@ -338,7 +333,7 @@
                     </div>
                 </div>
 
-                <!-- Interactive Document Viewer & Sub-Tabs -->
+                <!-- Embedded Document Viewer -->
                 <div class="mb-8">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
                         <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
@@ -354,21 +349,13 @@
                         </div>
                     </div>
 
-                    <!-- Embedded IFRAMES -->
                     <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
                         <div id="iframe-container-2-final" class="w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/18fj6AkDxKkHmWYMjI3ibsBh6YH5M4sDsIiFY4JXMCK0/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/18fj6AkDxKkHmWYMjI3ibsBh6YH5M4sDsIiFY4JXMCK0/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
                         <div id="iframe-container-2-evidence" class="hidden w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/1UTdjLk1aGKCgbMH7ZfAuWgxgdHChJ_gzfQCC7NiNRoM/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1UTdjLk1aGKCgbMH7ZfAuWgxgdHChJ_gzfQCC7NiNRoM/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
-                    </div>
-
-                    <!-- Direct Backup Links -->
-                    <div class="mt-4 flex flex-wrap gap-3 justify-end text-xs">
-                        <a href="https://docs.google.com/document/d/18fj6AkDxKkHmWYMjI3ibsBh6YH5M4sDsIiFY4JXMCK0/edit?usp=drive_link" target="_blank" class="text-slate-600 hover:text-brand-600 font-medium inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg">
-                            <i class="fa-solid fa-arrow-up-right-from-square text-brand-600"></i> Open Doc in Google Docs
-                        </a>
                     </div>
                 </div>
 
@@ -385,16 +372,20 @@
 
             <!-- TAB 3: PERSUASIVE -->
             <div id="tab-content-3" class="tab-content hidden bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                    <span class="bg-rose-50 text-rose-700 font-bold text-xs uppercase px-3 py-1.5 rounded-lg border border-rose-100">
-                        Essay Type 03 — Persuasive / Argumentative
-                    </span>
-                    <span class="text-slate-400 text-xs font-medium"><i class="fa-solid fa-scale-balanced"></i> Convincing & Evidence-Based</span>
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Persuasive Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-rose-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 03 — Persuasive / Argumentative
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "Why Online Lessons Can Be as Good as In-Person Lessons"
+                            </h3>
+                        </div>
+                    </div>
                 </div>
-
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6 leading-snug">
-                    "Why Online Lessons Can Be as Good as In-Person Lessons"
-                </h3>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <!-- Definition -->
@@ -420,7 +411,7 @@
                     </div>
                 </div>
 
-                <!-- Interactive Document Viewer & Sub-Tabs -->
+                <!-- Embedded Document Viewer -->
                 <div class="mb-8">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
                         <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
@@ -436,21 +427,13 @@
                         </div>
                     </div>
 
-                    <!-- Embedded IFRAMES -->
                     <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
                         <div id="iframe-container-3-final" class="w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/1RzRI0l47VVgUss_MRZOBxe-i5IrNIqd2cWwzlbTzgNI/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1RzRI0l47VVgUss_MRZOBxe-i5IrNIqd2cWwzlbTzgNI/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
                         <div id="iframe-container-3-evidence" class="hidden w-full h-full">
-                            <iframe src="https://drive.google.com/file/d/1PDHt14HPtY-EvvEIGXwTM5bZhDkiOidu/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://drive.google.com/file/d/1PDHt14HPtY-EvvEIGXwTM5bZhDkiOidu/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
-                    </div>
-
-                    <!-- Direct Backup Links -->
-                    <div class="mt-4 flex flex-wrap gap-3 justify-end text-xs">
-                        <a href="https://docs.google.com/document/d/1RzRI0l47VVgUss_MRZOBxe-i5IrNIqd2cWwzlbTzgNI/edit?usp=sharing" target="_blank" class="text-slate-600 hover:text-brand-600 font-medium inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg">
-                            <i class="fa-solid fa-arrow-up-right-from-square text-brand-600"></i> Open Doc in Google Docs
-                        </a>
                     </div>
                 </div>
 
@@ -467,16 +450,20 @@
 
             <!-- TAB 4: CAUSE & EFFECT -->
             <div id="tab-content-4" class="tab-content hidden bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                    <span class="bg-teal-50 text-teal-700 font-bold text-xs uppercase px-3 py-1.5 rounded-lg border border-teal-100">
-                        Essay Type 04 — Cause and Effect
-                    </span>
-                    <span class="text-slate-400 text-xs font-medium"><i class="fa-solid fa-arrow-right-arrow-left"></i> Analysis of Origins & Consequences</span>
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80" alt="Cause and Effect Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-teal-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 04 — Cause and Effect
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "You Don’t Need a Diploma to Get a Well-Paying Job"
+                            </h3>
+                        </div>
+                    </div>
                 </div>
-
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6 leading-snug">
-                    "You Don’t Need a Diploma to Get a Well-Paying Job"
-                </h3>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <!-- Definition -->
@@ -502,7 +489,7 @@
                     </div>
                 </div>
 
-                <!-- Interactive Document Viewer & Sub-Tabs -->
+                <!-- Embedded Document Viewer -->
                 <div class="mb-8">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
                         <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
@@ -518,21 +505,13 @@
                         </div>
                     </div>
 
-                    <!-- Embedded IFRAMES -->
                     <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
                         <div id="iframe-container-4-final" class="w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/1nu4Qv9Zw_ZVwgE50gjw0jixAGJ4YWBwlN0nZqvOB4xU/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1nu4Qv9Zw_ZVwgE50gjw0jixAGJ4YWBwlN0nZqvOB4xU/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
                         <div id="iframe-container-4-evidence" class="hidden w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/1EBtYq3GYbFjTxasEJGEMlxsGlVbk3S8jpiUogw9ARC8/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1EBtYq3GYbFjTxasEJGEMlxsGlVbk3S8jpiUogw9ARC8/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
-                    </div>
-
-                    <!-- Direct Backup Links -->
-                    <div class="mt-4 flex flex-wrap gap-3 justify-end text-xs">
-                        <a href="https://docs.google.com/document/d/1nu4Qv9Zw_ZVwgE50gjw0jixAGJ4YWBwlN0nZqvOB4xU/edit?usp=drive_link" target="_blank" class="text-slate-600 hover:text-brand-600 font-medium inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg">
-                            <i class="fa-solid fa-arrow-up-right-from-square text-brand-600"></i> Open Doc in Google Docs
-                        </a>
                     </div>
                 </div>
 
@@ -549,16 +528,20 @@
 
             <!-- TAB 5: COMPARE & CONTRAST -->
             <div id="tab-content-5" class="tab-content hidden bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-lg transition-all duration-300">
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                    <span class="bg-purple-50 text-purple-700 font-bold text-xs uppercase px-3 py-1.5 rounded-lg border border-purple-100">
-                        Essay Type 05 — Compare and Contrast
-                    </span>
-                    <span class="text-slate-400 text-xs font-medium"><i class="fa-solid fa-layer-group"></i> Analytical Comparison</span>
+                <!-- Visual Banner -->
+                <div class="relative w-full h-56 sm:h-72 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80" alt="Compare and Contrast Essay Concept" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent flex items-end p-6">
+                        <div>
+                            <span class="bg-purple-500/80 text-white font-bold text-xs uppercase px-3 py-1 rounded-lg backdrop-blur-md">
+                                Essay Type 05 — Compare and Contrast
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-2 drop-shadow-md">
+                                "Online Learning vs. Face-to-Face Learning"
+                            </h3>
+                        </div>
+                    </div>
                 </div>
-
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-6 leading-snug">
-                    "Online Learning vs. Face-to-Face Learning"
-                </h3>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <!-- Definition -->
@@ -584,7 +567,7 @@
                     </div>
                 </div>
 
-                <!-- Interactive Document Viewer & Sub-Tabs -->
+                <!-- Embedded Document Viewer -->
                 <div class="mb-8">
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-200">
                         <h4 class="text-xs font-bold uppercase text-slate-500 tracking-wider flex items-center gap-2">
@@ -600,21 +583,13 @@
                         </div>
                     </div>
 
-                    <!-- Embedded IFRAMES -->
                     <div class="relative w-full rounded-2xl overflow-hidden border border-slate-300 bg-slate-900 shadow-inner" style="min-height: 520px;">
                         <div id="iframe-container-5-final" class="w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/1yA2zgtIWT4vCH7ttOdbAttCF-l-8xrdoOJLDt60Ihmk/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1yA2zgtIWT4vCH7ttOdbAttCF-l-8xrdoOJLDt60Ihmk/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
                         <div id="iframe-container-5-evidence" class="hidden w-full h-full">
-                            <iframe src="https://docs.google.com/document/d/1_wGExPZ6CHRI11MVJzHuv8wLrttxzu-97npp49zEJbQ/preview" class="w-full h-[520px] border-0" allow="autoplay"></iframe>
+                            <iframe src="https://docs.google.com/document/d/1_wGExPZ6CHRI11MVJzHuv8wLrttxzu-97npp49zEJbQ/preview" class="w-full h-[520px] border-0"></iframe>
                         </div>
-                    </div>
-
-                    <!-- Direct Backup Links -->
-                    <div class="mt-4 flex flex-wrap gap-3 justify-end text-xs">
-                        <a href="https://docs.google.com/document/d/1yA2zgtIWT4vCH7ttOdbAttCF-l-8xrdoOJLDt60Ihmk/edit?usp=drive_link" target="_blank" class="text-slate-600 hover:text-brand-600 font-medium inline-flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-lg">
-                            <i class="fa-solid fa-arrow-up-right-from-square text-brand-600"></i> Open Doc in Google Docs
-                        </a>
                     </div>
                 </div>
 
@@ -688,7 +663,6 @@
     <!-- Interactive JavaScript -->
     <script>
         function switchTab(tabIndex) {
-            // Hide all tab contents
             for (let i = 1; i <= 5; i++) {
                 const content = document.getElementById(`tab-content-${i}`);
                 const btn = document.getElementById(`tab-btn-${i}`);
@@ -700,7 +674,6 @@
                 }
             }
 
-            // Show selected content & set active state
             const activeContent = document.getElementById(`tab-content-${tabIndex}`);
             const activeBtn = document.getElementById(`tab-btn-${tabIndex}`);
 
@@ -711,7 +684,6 @@
             }
         }
 
-        // Sub-tab switching for inline embedded document viewers
         function switchDocViewer(essayIndex, viewType) {
             const containers = document.querySelectorAll(`[id^="iframe-container-${essayIndex}-"]`);
             containers.forEach(el => el.classList.add('hidden'));
@@ -721,7 +693,6 @@
                 selectedContainer.classList.remove('hidden');
             }
 
-            // Update subtab buttons UI
             const subtabs = document.querySelectorAll(`[id^="doc-subtab-${essayIndex}-"]`);
             subtabs.forEach(btn => {
                 btn.classList.remove('bg-white', 'text-slate-900', 'shadow-xs');
